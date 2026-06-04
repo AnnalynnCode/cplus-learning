@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCF GESP C++ 真题讲解</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --success: #16a34a;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-secondary: #64748b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 20px;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding: 48px 20px;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    border-radius: 16px;
+    margin-bottom: 32px;
+  }
+  header h1 { font-size: 2em; margin-bottom: 8px; }
+  header p { opacity: 0.9; font-size: 1.1em; }
+  .intro {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+    color: var(--text-secondary);
+  }
+  .exam-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .exam-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: box-shadow 0.2s, transform 0.15s;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .exam-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+  .exam-icon {
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    color: white;
+    min-width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: 700;
+  }
+  .exam-icon.l4 {
+    background: linear-gradient(135deg, #059669, #047857);
+  }
+  .exam-info h3 { font-size: 1.15em; margin-bottom: 4px; color: var(--primary); }
+  .exam-info p { color: var(--text-secondary); font-size: 0.9em; }
+  .exam-arrow { margin-left: auto; color: var(--text-secondary); font-size: 1.2em; }
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-size: 0.85em;
+  }
+  @media (max-width: 640px) {
+    body { padding: 10px; }
+    header { padding: 32px 16px; }
+    header h1 { font-size: 1.4em; }
+    .exam-card { flex-direction: column; text-align: center; }
+    .exam-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>CCF GESP 认证 C++ 真题讲解</h1>
+  <p>适合小学生理解的详细解题过程</p>
+</header>
+
+<div class="intro">
+  <p>收录 CCF GESP 编程能力等级认证 <strong>C++ 三级 / 四级</strong> 历年真题，每道题配有详细的解题思路和知识点总结。</p>
+</div>
+
+<div class="exam-list">
+
+  <a href="gesp4-202603.html" class="exam-card">
+    <div class="exam-icon l4">03</div>
+    <div class="exam-info">
+      <h3>2026年03月 · C++ 四级</h3>
+      <p>默认参数 · 二级指针 · 数组指针 · 引用传递 · 结构体初始化 · 插入排序 · 时间复杂度 · 异常处理</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+  <a href="gesp4-202512.html" class="exam-card">
+    <div class="exam-icon l4">12</div>
+    <div class="exam-info">
+      <h3>2025年12月 · C++ 四级</h3>
+      <p>指针接力 · 三维数组 · 嵌套结构体 · 递推 · 稳定性判断 · 文件读写陷阱 · 异常处理</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+  <a href="gesp4-202509.html" class="exam-card">
+    <div class="exam-icon l4">09</div>
+    <div class="exam-info">
+      <h3>2025年09月 · C++ 四级</h3>
+      <p>指针解引用 · 二维数组指针 · 默认参数 · 插入排序实现 · 时间复杂度 · 递推</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+  <a href="gesp4-202506.html" class="exam-card">
+    <div class="exam-icon l4">06</div>
+    <div class="exam-info">
+      <h3>2025年06月 · C++ 四级</h3>
+      <p>指针 · 二维数组 · 引用传递 · 递推 · 插入排序 · 异常处理 · 文件读写</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+  <a href="gesp4-202503.html" class="exam-card">
+    <div class="exam-icon l4">03</div>
+    <div class="exam-info">
+      <h3>2025年03月 · C++ 四级</h3>
+      <p>函数声明 · 作用域 · 结构体 · 指针 · 排序稳定性 · 时间复杂度 · 异常处理</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+</div>
+
+<div class="exam-list">
+
+  <a href="gesp3-202603.html" class="exam-card">
+    <div class="exam-icon">03</div>
+    <div class="exam-info">
+      <h3>2026年03月 · C++ 三级</h3>
+      <p>ASCII码 · 位运算 · 补码 · 异或交换 · 枚举法 · 凯撒密码</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+  <a href="gesp3-202512.html" class="exam-card">
+    <div class="exam-icon">12</div>
+    <div class="exam-info">
+      <h3>2025年12月 · C++ 三级</h3>
+      <p>进制转换 · 补码 · 位运算 · 字符串 · 函数 · 密码强度</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+  <a href="gesp3-202509.html" class="exam-card">
+    <div class="exam-icon">09</div>
+    <div class="exam-info">
+      <h3>2025年09月 · C++ 三级</h3>
+      <p>数组 · 函数 · 作用域 · 循环 · string 类 · 日历制作</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+  <a href="gesp3-202506.html" class="exam-card">
+    <div class="exam-icon">06</div>
+    <div class="exam-info">
+      <h3>2025年06月 · C++ 三级</h3>
+      <p>原码/反码/补码 · 位运算 · 数组 · 字符串 · 枚举法</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+  <a href="gesp3-202503.html" class="exam-card">
+    <div class="exam-icon">03</div>
+    <div class="exam-info">
+      <h3>2025年03月 · C++ 三级</h3>
+      <p>Base64编码 · UTF-8 · 原码 · 进制转换 · 流程图</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+  <a href="gesp3-202412.html" class="exam-card">
+    <div class="exam-icon">12</div>
+    <div class="exam-info">
+      <h3>2024年12月 · C++ 三级</h3>
+      <p>原码/补码 · 进制转换 · 逻辑运算 · 算术右移 · 字符串 · 素数 · 数字打印</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+  <a href="gesp3-202409.html" class="exam-card">
+    <div class="exam-icon">09</div>
+    <div class="exam-info">
+      <h3>2024年09月 · C++ 三级</h3>
+      <p>位运算 · 浮点数陷阱 · 数组 · 类型转换 · 三步交换法 · 移位 · 字符串查找</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+  <a href="gesp3-202406.html" class="exam-card">
+    <div class="exam-icon">06</div>
+    <div class="exam-info">
+      <h3>2024年06月 · C++ 三级</h3>
+      <p>原码/反码/补码 · 位运算 · 异或 · 枚举法 · 流程图 · 闰年 · 进制转换</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+  <a href="gesp3-202403.html" class="exam-card">
+    <div class="exam-icon">03</div>
+    <div class="exam-info">
+      <h3>2024年03月 · C++ 三级</h3>
+      <p>补码 · 位运算 · ASCII · 八进制/十六进制 · 鸿蒙系统 · 王选奖</p>
+    </div>
+    <div class="exam-arrow">→</div>
+  </a>
+
+</div>
+
+<footer>
+  <p>CCF GESP 认证 C++ 三级 / 四级 真题讲解合集</p>
+  <p style="margin-top:4px;">题目来源：CCF GESP 官方真题 · 解析仅供参考学习</p>
+</footer>
+
+</div>
+</body>
+</html>

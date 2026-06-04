@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCF GESP C++ 三级 2025年03月 真题讲解</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #d97706;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 20px;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    border-radius: 16px;
+    margin-bottom: 32px;
+  }
+  header h1 { font-size: 2em; margin-bottom: 8px; }
+  header p { opacity: 0.9; font-size: 1.1em; }
+  .section-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 40px 0 20px;
+    padding: 12px 20px;
+    background: var(--primary);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .badge {
+    background: rgba(255,255,255,0.25);
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 400;
+  }
+  .answer-key {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .answer-key table { width: 100%; border-collapse: collapse; text-align: center; }
+  .answer-key th, .answer-key td {
+    padding: 8px 6px;
+    border: 1px solid var(--border);
+    font-size: 0.95em;
+  }
+  .answer-key th { background: #f1f5f9; font-weight: 600; }
+  .answer-key .ans { font-weight: 700; color: var(--primary); font-size: 1.1em; }
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .question-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .question-header {
+    background: #f1f5f9;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .question-num {
+    background: var(--primary);
+    color: white;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+  .question-type {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .answer-badge {
+    margin-left: auto;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9em;
+  }
+  .answer-badge.correct { background: #dcfce7; color: #166534; }
+  .answer-badge.wrong { background: #fef2f2; color: #991b1b; }
+  .question-body { padding: 20px; }
+  .question-body p { margin-bottom: 12px; }
+  .options { margin: 12px 0; padding-left: 8px; }
+  .options div {
+    padding: 6px 12px;
+    margin: 4px 0;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .options div.highlight {
+    background: #dbeafe;
+    font-weight: 600;
+    border-left: 3px solid var(--primary);
+  }
+  .explanation {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+  .explanation h4 {
+    color: #166534;
+    margin-bottom: 8px;
+    font-size: 1em;
+  }
+  .explanation ul { padding-left: 20px; }
+  .explanation li { margin: 4px 0; }
+  .explanation .key-point {
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin-top: 10px;
+    font-weight: 500;
+  }
+  pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 16px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-family: "Cascadia Code", "Fira Code", "JetBrains Mono", monospace;
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin: 12px 0;
+  }
+  pre .kw { color: #c084fc; }
+  pre .fn { color: #60a5fa; }
+  pre .str { color: #a3e635; }
+  pre .num { color: #fb923c; }
+  pre .cmt { color: #6b7280; font-style: italic; }
+  pre .op { color: #fbbf24; }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin: 0 2px;
+  }
+  .tag.concept { background: #ede9fe; color: #6d28d9; }
+  .tag.formula { background: #fce7f3; color: #be185d; }
+  .tag.calc { background: #e0f2fe; color: #0369a1; }
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 28px;
+    margin-bottom: 32px;
+  }
+  .toc h3 { margin-bottom: 12px; }
+  .toc a { color: var(--primary); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc ul { padding-left: 20px; }
+  .toc li { margin: 4px 0; }
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-size: 0.9em;
+  }
+  @media (max-width: 640px) {
+    body { padding: 10px; }
+    header { padding: 24px 16px; }
+    header h1 { font-size: 1.4em; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>CCF GESP 认证 C++ 三级</h1>
+  <p>2025年03月 · 真题详解</p>
+  <p style="font-size:0.9em;margin-top:8px;">适合小学生理解的详细解题过程</p>
+</header>
+
+<!-- ==================== 目录 ==================== -->
+<div class="toc">
+  <h3>📋 目录</h3>
+  <ul>
+    <li><a href="#s1">一、单选题（15题，每题2分，共30分）</a></li>
+    <li><a href="#s2">二、判断题（10题，每题2分，共20分）</a></li>
+    <li><a href="#s3">三、编程题（2题，每题25分，共50分）</a></li>
+  </ul>
+</div>
+
+<!-- ==================== 第一部分：单选题 ==================== -->
+<h2 class="section-title" id="s1">一、单选题 <span class="badge">15题 × 2分 = 30分</span></h2>
+
+<div class="answer-key">
+  <table>
+    <tr><th>题号</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr>
+    <tr><th>答案</th>
+      <td class="ans">D</td><td class="ans">B</td><td class="ans">A</td><td class="ans">A</td>
+      <td class="ans">B</td><td class="ans">A</td><td class="ans">C</td><td class="ans">A</td>
+      <td class="ans">C</td><td class="ans">D</td><td class="ans">D</td><td class="ans">D</td>
+      <td class="ans">B</td><td class="ans">D</td><td class="ans">C</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Q1 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">1</div>
+    <div class="question-type">单选题 · 进制与编码</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>Base64 编码将每3字节的输入数据编码为4字节的输出数据。如果输入数据长度不是3的倍数，会用 = 号填充。在Base64编码中，如果输入字符串的长度为10字节，编码后的字符串长度是多少？</p>
+    <div class="options">
+      <div>A. 12 字节</div>
+      <div>B. 13 字节</div>
+      <div>C. 14 字节</div>
+      <div class="highlight">D. 16 字节 ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>Base64 的规则：每 <strong>3 字节</strong> 输入 → <strong>4 字节</strong> 输出</li>
+        <li>10 字节 ÷ 3 = 3 组……余 <strong>1 字节</strong></li>
+        <li>3 个完整组：3 × 4 = <strong>12 字节</strong></li>
+        <li>剩下的 1 字节不足 3 字节，也需要编码成 4 字节（其中会用 = 填充）</li>
+        <li>总共：12 + 4 = <strong>16 字节</strong></li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">核心公式</span>
+        编码后长度 = ⌈输入长度 ÷ 3⌉ × 4 = ⌈10 ÷ 3⌉ × 4 = 4 × 4 = <strong>16 字节</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">2</div>
+    <div class="question-type">单选题 · 字符编码</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下哪个字节序列是合法的 UTF-8 编码？</p>
+    <p>UTF-8 编码规则：<br>
+    1字节：0xxxxxxx<br>
+    2字节：110xxxxx 10xxxxxx<br>
+    3字节：1110xxxx 10xxxxxx 10xxxxxx<br>
+    4字节：11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</p>
+    <div class="options">
+      <div>A. 0xC0 0x80</div>
+      <div class="highlight">B. 0xF0 0x90 0x80 0x80 ✓</div>
+      <div>C. 0x80 0x80 0x80</div>
+      <div>D. 0xFF 0xFE 0xFD</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>选项 A：0xC0 0x80</strong><br>
+          0xC0 = <code>1100 0000</code>，以 110 开头表示2字节。但 11000000 中 xxxxx 全为0，这是"过长编码"(overlong)，不合法。</li>
+        <li><strong>选项 B：0xF0 0x90 0x80 0x80</strong><br>
+          0xF0 = <code>1111 0000</code>，以 11110 开头表示4字节 ✓<br>
+          0x90 = <code>1001 0000</code>，以 10 开头 ✓<br>
+          0x80 = <code>1000 0000</code>，以 10 开头 ✓<br>
+          0x80 = <code>1000 0000</code>，以 10 开头 ✓<br>
+          <strong>全部合法！</strong></li>
+        <li><strong>选项 C：0x80 0x80 0x80</strong><br>
+          0x80 = <code>1000 0000</code>，以 10 开头是"后续字节"，不能作为首字节。不合法。</li>
+        <li><strong>选项 D：0xFF 0xFE 0xFD</strong><br>
+          0xFF = <code>1111 1111</code>，不属于任何合法的 UTF-8 开头模式。不合法。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">判断方法</span>
+        逐字节检查：首字节的<strong>高位1的个数</strong>决定总字节数；后续字节必须以 <code>10</code> 开头。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">3</div>
+    <div class="question-type">单选题 · 原码表示</div>
+    <div class="answer-badge correct">答案：A</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>在 8 位二进制原码表示中，八进制数 -5 的二进制形式是什么？</p>
+    <div class="options">
+      <div class="highlight">A. 10000101 ✓</div>
+      <div>B. 11111010</div>
+      <div>C. 11111011</div>
+      <div>D. 00000101</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>八进制数 5 = 二进制 <code>0000 0101</code>（8位）</li>
+        <li><strong>原码</strong>表示负数：最高位（符号位）改为 1，其余位不变</li>
+        <li>-5 原码 = <code>1</code>000 0101 = <strong>10000101</strong></li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">原码规则</span>
+        8位原码中，最高位是<strong>符号位</strong>（0=正，1=负），低7位表示数值。B选项是反码，C选项是补码。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">4</div>
+    <div class="question-type">单选题 · 进制转换</div>
+    <div class="answer-badge correct">答案：A</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>十进制数 111.111 的二进制表示可以是下面的哪一个？</p>
+    <div class="options">
+      <div class="highlight">A. 1101111.0001110001 ✓</div>
+      <div>B. 1101110.1001110001</div>
+      <div>C. 1101111.1001110001</div>
+      <div>D. 1101111.0011110001</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>整数部分 111：</strong></li>
+      </ul>
+      <table style="margin:8px 0;border-collapse:collapse;">
+        <tr><td>111 ÷ 2 = 55</td><td>余 1</td><td>↑</td></tr>
+        <tr><td>55 ÷ 2 = 27</td><td>余 1</td><td>↑</td></tr>
+        <tr><td>27 ÷ 2 = 13</td><td>余 1</td><td>↑</td></tr>
+        <tr><td>13 ÷ 2 = 6</td><td>余 1</td><td>↑</td></tr>
+        <tr><td>6 ÷ 2 = 3</td><td>余 0</td><td>↑</td></tr>
+        <tr><td>3 ÷ 2 = 1</td><td>余 1</td><td>↑</td></tr>
+        <tr><td>1 ÷ 2 = 0</td><td>余 1</td><td>↑</td></tr>
+      </table>
+      <p>从下往上：111₁₀ = <strong>1101111</strong>₂ ✓（前三个选项都满足）</p>
+      <ul>
+        <li><strong>小数部分 0.111：</strong><br>
+          0.111 × 2 = <strong>0</strong>.222 → 取 0<br>
+          0.222 × 2 = <strong>0</strong>.444 → 取 0<br>
+          0.444 × 2 = <strong>0</strong>.888 → 取 0<br>
+          0.888 × 2 = <strong>1</strong>.776 → 取 1<br>
+          0.776 × 2 = <strong>1</strong>.552 → 取 1<br>
+          0.552 × 2 = <strong>1</strong>.104 → 取 1<br>
+          0.104 × 2 = <strong>0</strong>.208 → 取 0<br>
+          0.208 × 2 = <strong>0</strong>.416 → 取 0<br>
+          0.416 × 2 = <strong>0</strong>.832 → 取 0<br>
+          0.832 × 2 = <strong>1</strong>.664 → 取 1<br>
+          小数部分 ≈ <strong>0001110001</strong>₂</li>
+      </ul>
+      <p>所以 111.111₁₀ ≈ <strong>1101111.0001110001</strong>₂</p>
+      <div class="key-point">
+        <span class="tag calc">小数转换口诀</span>
+        <strong>乘2取整，顺向排列</strong>：小数部分不断 ×2，取出整数部分，直到为0或达到精度。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">5</div>
+    <div class="question-type">单选题 · 补码</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>在C++中，补码的主要作用是什么？</p>
+    <div class="options">
+      <div>A. 提高浮点数的精度</div>
+      <div class="highlight">B. 简化整数的加减法运算 ✓</div>
+      <div>C. 增加整数的表示范围</div>
+      <div>D. 优化内存分配</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>补码最大的好处：<strong>加法和减法可以用同一套电路实现</strong></li>
+        <li>比如计算 5 - 3，在补码下就是 5 + (-3的补码)，直接用加法器完成</li>
+        <li>A 选项：浮点数精度与 IEEE 754 标准有关，与补码无关</li>
+        <li>C 选项：补码的表示范围并没有比原码大（8位补码：-128~127，原码：-127~127，范围相同）</li>
+        <li>D 选项：与内存分配无关</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">一句话总结</span>
+        补码让计算机用<strong>同一个加法电路</strong>就能完成加法和减法，大大简化了硬件设计。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">6</div>
+    <div class="question-type">单选题 · 整数范围</div>
+    <div class="answer-badge correct">答案：A</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>在C++中，一个8位有符号整数（使用补码表示）的范围是？</p>
+    <div class="options">
+      <div class="highlight">A. -128 到 127 ✓</div>
+      <div>B. -127 到 128</div>
+      <div>C. -256 到 255</div>
+      <div>D. 0 到 255</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>8位有符号整数（补码），最高位是符号位</li>
+        <li>正数范围：0000 0000 到 0111 1111 = <strong>0 到 127</strong></li>
+        <li>负数范围：1000 0000 到 1111 1111</li>
+        <li>1000 0000（补码）= -128（这是补码的特殊值）</li>
+        <li>1111 1111（补码）= -1</li>
+        <li>所以范围是 <strong>-128 到 127</strong></li>
+      </ul>
+      <div class="key-point">
+        <span class="tag formula">通用公式</span>
+        n位有符号整数（补码）范围：<strong>-2<sup>n-1</sup> 到 2<sup>n-1</sup> - 1</strong><br>
+        当n=8：-2⁷ 到 2⁷-1 = <strong>-128 到 127</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">7</div>
+    <div class="question-type">单选题 · 类型转换</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下代码的输出是什么？</p>
+<pre><span class="kw">int</span> a = -5;
+<span class="kw">unsigned int</span> b = a;
+cout &lt;&lt; b;</pre>
+    <div class="options">
+      <div>A. -5</div>
+      <div>B. 5</div>
+      <div class="highlight">C. 4294967291 ✓</div>
+      <div>D. 编译错误</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>把负数赋值给无符号整数，会发生<strong>隐式类型转换</strong></li>
+        <li><code>int</code>（32位有符号）：-5 在内存中的补码是 <code>11111111 11111111 11111111 11111011</code></li>
+        <li>把这个二进制当作 <code>unsigned int</code> 来解读，值就是 2³² - 5 = <strong>4294967291</strong></li>
+      </ul>
+      <div class="key-point">
+        <span class="tag formula">转换公式</span>
+        负数转无符号：<strong>结果 = 2³² + 原值 = 4294967296 - 5 = 4294967291</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">8</div>
+    <div class="question-type">单选题 · 流操纵符</div>
+    <div class="answer-badge correct">答案：A</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>下列程序的作用是什么？</p>
+<pre><span class="kw">int</span> main() {
+    <span class="kw">int</span> decimal = 25;
+    cout &lt;&lt; oct &lt;&lt; decimal;
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="options">
+      <div class="highlight">A. 将十进制数转换成八进制数 ✓</div>
+      <div>B. 将八进制数转换成十进制数</div>
+      <div>C. 将二进制数转换成八进制数</div>
+      <div>D. 将八进制数转换成16进制数</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><code>oct</code> 是 C++ 的流操纵符，表示以<strong>八进制</strong>格式输出</li>
+        <li>变量 <code>decimal = 25</code>（十进制25），用 <code>oct</code> 输出 → <strong>31</strong>（八进制）</li>
+        <li>验证：3 × 8¹ + 1 × 8⁰ = 24 + 1 = 25 ✓</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">三个进制操纵符</span>
+        <code>dec</code> → 十进制（默认） &nbsp;|&nbsp; <code>oct</code> → 八进制 &nbsp;|&nbsp; <code>hex</code> → 十六进制
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">9</div>
+    <div class="question-type">单选题 · 进制输出</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>下面程序是将十进制转十六进制，横线处应该填入的是？</p>
+<pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">int</span> main() {
+    <span class="kw">int</span> decimal = 255;
+    ——————————————————
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="options">
+      <div>A. cout &lt;&lt; oct &lt;&lt; decimal;</div>
+      <div>B. cout &lt;&lt; decimal &lt;&lt; decimal;</div>
+      <div class="highlight">C. cout &lt;&lt; hex &lt;&lt; decimal; ✓</div>
+      <div>D. 不能正确执行</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>题目要求：<strong>十进制 → 十六进制</strong></li>
+        <li><code>hex</code> 操纵符让整数以十六进制格式输出</li>
+        <li>decimal = 255₁₀，用 <code>hex</code> 输出 → <strong>ff</strong>（十六进制）</li>
+        <li>验证：15 × 16¹ + 15 × 16⁰ = 240 + 15 = 255 ✓</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">10</div>
+    <div class="question-type">单选题 · 位运算</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下代码的说法正确的是什么？</p>
+<pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">int</span> main() {
+    <span class="kw">int</span> a = 0b1101;
+    <span class="kw">int</span> b = 0b1011;
+    cout &lt;&lt; (a ^ b);
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="options">
+      <div>A. 进行的是整体异或运算</div>
+      <div>B. 进行的是按位同或运算</div>
+      <div>C. 进行的是按位与运算</div>
+      <div class="highlight">D. 进行的是按位异或运算 ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>C++ 中 <code>^</code> 是<strong>按位异或</strong>运算符</li>
+        <li>a = 0b1101（二进制 1101 = 13）</li>
+        <li>b = 0b1011（二进制 1011 = 11）</li>
+        <li>按位异或：相同得0，不同得1</li>
+      </ul>
+      <pre>  1101  (a)
+^ 1011  (b)
+———————
+  0110  = 6</pre>
+      <p>输出 6。A说"整体"不对，是<strong>按位</strong>；B是同或，不对；C是与，不对。</p>
+      <div class="key-point">
+        <span class="tag concept">位运算速记</span>
+        <code>&amp;</code> 按位与 &nbsp;|&nbsp; <code>|</code> 按位或 &nbsp;|&nbsp; <code>^</code> 按位异或 &nbsp;|&nbsp; <code>~</code> 按位取反
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">11</div>
+    <div class="question-type">单选题 · 枚举查找</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>下面枚举法查找最大值索引程序中，横线处应该填写的是？</p>
+<pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">int</span> main() {
+    <span class="kw">int</span> arr[] = {3, 7, 2, 9, 5};
+    <span class="kw">int</span> maxIndex = 0;
+    <span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt; 5; i++) {
+        ————————————————————————————————
+        {
+            maxIndex = i;
+        }
+    }
+    cout &lt;&lt; maxIndex;
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="options">
+      <div>A. if (arr[maxIndex] &gt; arr[i])</div>
+      <div>B. if (arr[i]-1 &gt; arr[maxIndex])</div>
+      <div>C. if (arr[i]+1 &gt; arr[maxIndex])</div>
+      <div class="highlight">D. if (arr[i] &gt; arr[maxIndex]) ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>我们要找<strong>最大值所在的索引</strong></li>
+        <li>当 <code>arr[i]</code> 比当前的 <code>arr[maxIndex]</code> 更大时，更新 <code>maxIndex = i</code></li>
+        <li>所以条件应该填：<strong>if (arr[i] &gt; arr[maxIndex])</strong></li>
+        <li>程序运行：arr[0]=3, arr[1]=7→更新, arr[2]=2→不更新, arr[3]=9→更新, arr[4]=5→不更新</li>
+        <li>最终 maxIndex = 3，arr[3] = 9 ✓</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">12</div>
+    <div class="question-type">单选题 · 双指针</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下代码的功能是将数组中的奇数和偶数分别放在数组的前半部分和后半部分，横线处应该填入的是？</p>
+<pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">int</span> main() {
+    <span class="kw">int</span> arr[] = {1, 2, 3, 4, 5};
+    <span class="kw">int</span> left = 0, right = 4;
+    <span class="kw">while</span> (left &lt; right) {
+        <span class="kw">while</span> (arr[left] % 2 == 1 &amp;&amp; left &lt; right) left++;
+        ————————————————————————————————————————————————————
+        <span class="kw">if</span> (left &lt; right) {
+            swap(arr[left], arr[right]);
+        }
+    <span class="err">    }</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = 0; i &lt; 5; i++) {
+        cout &lt;&lt; arr[i] &lt;&lt; <span class="str">" "</span>;
+    }
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="options">
+      <div>A. while (arr[left] % 2 == 0 && left &lt; right) right--;</div>
+      <div>B. while (arr[right] % 2 == 0 && left &lt; right) left--;</div>
+      <div>C. while (arr[right] % 2 != 0 && left &lt; right) right--;</div>
+      <div class="highlight">D. while (arr[right] % 2 == 0 && left &lt; right) right--; ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>算法思路（双指针法）：</li>
+        <li>left 从左往右找<strong>偶数</strong>（应该放到右边去的）</li>
+        <li>right 从右往左找<strong>偶数</strong>（偶数已经位置对了，跳过）…… 等等不对！</li>
+        <li>我们想要：<strong>奇数在左边，偶数在右边</strong></li>
+        <li>所以 left 找偶数（要移到右边的），right 找奇数（要移到左边的），找到后交换</li>
+        <li>第一条 while：left 跳过奇数（奇数在左边是对的），找到偶数就停下</li>
+        <li>第二条 while：right 应该跳过偶数（偶数在右边是对的），找到奇数停下</li>
+        <li>所以：<code>while (arr[right] % 2 == 0 && left &lt; right) right--;</code> ✓</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">执行过程</span>
+        初始: {1,2,3,4,5}, left=0(1是奇数→右移), left=1(2是偶数→停), right=4(5是奇数→停), 交换2和5 → {1,5,3,4,2}, 继续…最终: {1,5,3,4,2}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">13</div>
+    <div class="question-type">单选题 · 字符串操作</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>下面程序最后能够得到 HelloC++ 的是？</p>
+<pre><span class="kw">int</span> main() {
+    string str = <span class="str">"HelloWorld"</span>;
+    ___________________
+    cout &lt;&lt; str;
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="options">
+      <div>A. str.replace(0, 5, "C++");</div>
+      <div class="highlight">B. str.replace(5, 5, "C++"); ✓</div>
+      <div>C. str.replace(1, 5, "C++");</div>
+      <div>D. str.replace(4, 5, "C++");</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>原字符串：<code>"HelloWorld"</code>，共10个字符</li>
+        <li>位置：<code>H(0) e(1) l(2) l(3) o(4) W(5) o(6) r(7) l(8) d(9)</code></li>
+        <li>想得到 <code>"HelloC++"</code>：把 <code>"World"</code> 替换成 <code>"C++"</code></li>
+        <li><code>"World"</code> 从索引 <strong>5</strong> 开始，长度 <strong>5</strong></li>
+        <li>所以：<code>str.replace(5, 5, "C++")</code> → 从位置5开始，替换5个字符为"C++"</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">replace参数说明</span>
+        <code>str.replace(起始位置, 替换长度, 新字符串)</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">14</div>
+    <div class="question-type">单选题 · 子串操作</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>想要得到字符串 world，下面程序横线处应该填入的是？</p>
+<pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;string&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">int</span> main() {
+    string str = <span class="str">"HelloC++"</span>;
+    _________________
+    _________________
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="options">
+      <div>A. str.insert(4, "World"); cout &lt;&lt; str.substr(4, 4);</div>
+      <div>B. cout &lt;&lt; str.substr(5, 5);</div>
+      <div>C. str.insert("World"); cout &lt;&lt; str.substr(5, 5);</div>
+      <div class="highlight">D. str.insert(5, "World"); cout &lt;&lt; str.substr(5, 5); ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>原始：<code>"HelloC++"</code></li>
+        <li>第一步：在位置5插入 <code>"World"</code> → <code>"HelloWorldC++"</code></li>
+        <li>第二步：从位置5开始取5个字符 → <code>"World"</code></li>
+        <li>注意题目中是小写 <code>world</code>，但代码中的字符串是 <code>"World"</code>(首字母大写)。不过选项D的逻辑流程是正确的，输出是"World"。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">两个函数</span>
+        <code>str.insert(位置, 字符串)</code> — 在指定位置插入<br>
+        <code>str.substr(起始位置, 长度)</code> — 截取子串
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">15</div>
+    <div class="question-type">单选题 · 条件判断</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>有 n 个正整数，假设一个正整数是美丽数字当且仅当该正整数是 9 的倍数但不是 8 的倍数。下面的程序是编写计算 n 个正整数中美丽数字的数量，横线处应该填入的是？</p>
+<pre><span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt;= n; i++) {
+    cin &gt;&gt; a;
+    __________________________
+        cnt++;
+}</pre>
+    <div class="options">
+      <div>A. if (a % 9 != 0 && a % 8 != 0)</div>
+      <div>B. if (a % 9 == 0 & a % 8 == 0)</div>
+      <div class="highlight">C. if (a % 9 == 0 && a % 8 != 0) ✓</div>
+      <div>D. if (a % 9 == 0 & a % 8 != 0)</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>美丽数字的条件：<strong>是9的倍数</strong> AND <strong>不是8的倍数</strong></li>
+        <li>是9的倍数：<code>a % 9 == 0</code></li>
+        <li>不是8的倍数：<code>a % 8 != 0</code></li>
+        <li>用逻辑与连接：<code>a % 9 == 0 && a % 8 != 0</code></li>
+        <li>注意：D选项用 <code>&amp;</code>（单个&是<strong>按位与</strong>），不是逻辑与，语义不同（虽然在这个场景下碰巧也能工作，但正确写法是用<code>&&</code>）</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">注意区分</span>
+        <code>&amp;&amp;</code> 逻辑与（Boolean）&nbsp;|&nbsp; <code>&amp;</code> 按位与（Bitwise）<br>
+        在条件判断中应使用 <code>&amp;&amp;</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第二部分：判断题 ==================== -->
+<h2 class="section-title" id="s2">二、判断题 <span class="badge">10题 × 2分 = 20分</span></h2>
+
+<div class="answer-key">
+  <table>
+    <tr><th>题号</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+    <tr><th>答案</th>
+      <td class="ans">✓</td><td class="ans">✓</td><td class="ans">✓</td><td class="ans">✓</td>
+      <td class="ans">✓</td><td class="ans">✓</td><td class="ans">✓</td><td class="ans">✓</td>
+      <td class="ans">✓</td><td class="ans">✗</td>
+    </tr>
+  </table>
+</div>
+
+<!-- T1 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">1</div>
+    <div class="question-type">判断题 · 几何</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>判断一个三角形是否成立的条件只有：任意两边长度之和大于第三条边的长度。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>这是三角形不等式定理：设三边为 a、b、c，当且仅当 a+b>c、a+c>b、b+c>a 同时成立时，三条线段能构成三角形。这是三角形存在的<strong>充要条件</strong>。</p>
+    </div>
+  </div>
+</div>
+
+<!-- T2 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">2</div>
+    <div class="question-type">判断题 · 位运算应用</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>这段程序进行的是判断一个从键盘输入的字符的ASCII是否是奇数，若是，输出YES，否则，输出NO。</p>
+<pre><span class="kw">int</span> main() {
+    <span class="kw">char</span> x;
+    scanf(<span class="str">"%c"</span>, &amp;x);
+    <span class="kw">int</span> ASCII = (<span class="kw">int</span>)x;
+    cout &lt;&lt; (x &amp; 1 ? <span class="str">"YES"</span> : <span class="str">"NO"</span>) &lt;&lt; <span class="str">'\n'</span>;
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong><code>x &amp; 1</code> 是按位与运算，检查二进制最低位。二进制最低位为1表示奇数，为0表示偶数。该程序正确判断了ASCII值的奇偶性。</p>
+      <div class="key-point">
+        例如：输入 'A'（ASCII=65），65的二进制=01000001，最低位=1，输出YES ✓
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T3 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">3</div>
+    <div class="question-type">判断题 · 运算符优先级</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>下面程序是判断是否是闰年的正确程序。</p>
+<pre>cin &gt;&gt; n;
+cout &lt;&lt; ((n%4==0 &amp;&amp; n%100!=0) || (n%400==0)) ? 1 : 0;
+<span class="kw">return</span> 0;</pre>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>虽然代码中存在运算符优先级问题（<code>&lt;&lt;</code> 优先级高于 <code>?:</code>），但碰巧输出结果还是正确的：</p>
+      <ul>
+        <li>实际解析为：<code>(cout &lt;&lt; 条件) ? 1 : 0</code></li>
+        <li>cout 先输出条件值（闰年输出1，否则0），然后 ?: 的结果被丢弃</li>
+        <li>闰年条件本身 <code>(n%4==0 && n%100!=0) || (n%400==0)</code> 完全正确</li>
+        <li>最终输出结果正确 ✓</li>
+      </ul>
+      <div class="key-point">严谨写法应加括号：<code>cout &lt;&lt; (((n%4==0&amp;&amp;n%100!=0)||(n%400==0)) ? 1 : 0);</code></div>
+    </div>
+  </div>
+</div>
+
+<!-- T4 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">4</div>
+    <div class="question-type">判断题 · 条件表达式</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>C++语句 <code>cout&lt;&lt;(n%15==0? "YES":"NO");</code> 能够判断一个整数能否被3和5同时整除。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>能被3和5同时整除 ⇔ 能被15整除（因为3和5互质）。<code>n % 15 == 0</code> 恰好判断了这个条件。如果满足输出"YES"，否则输出"NO"。</p>
+    </div>
+  </div>
+</div>
+
+<!-- T5 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">5</div>
+    <div class="question-type">判断题 · 组合数学</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>有n个同学，从中抽取任意个数来参加学校组织的大合唱，共有2的n次幂个方法。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>每个同学有"选"和"不选"两种状态，n个同学共有 2×2×…×2 = <strong>2ⁿ</strong> 种选择方法（包含选0人的情况）。这就是集合的<strong>子集个数</strong>公式。</p>
+    </div>
+  </div>
+</div>
+
+<!-- T6 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">6</div>
+    <div class="question-type">判断题 · 二进制</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>判断（2025）₁₀化为二进制后，1的个数为偶数个，因此2025为A类数。</p>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>使用"除2取余"法：</li>
+      </ul>
+      <table style="margin:8px 0;border-collapse:collapse;">
+        <tr><td>2025 ÷ 2 = 1012</td><td>余 1</td></tr>
+        <tr><td>1012 ÷ 2 = 506</td><td>余 0</td></tr>
+        <tr><td>506 ÷ 2 = 253</td><td>余 0</td></tr>
+        <tr><td>253 ÷ 2 = 126</td><td>余 1</td></tr>
+        <tr><td>126 ÷ 2 = 63</td><td>余 0</td></tr>
+        <tr><td>63 ÷ 2 = 31</td><td>余 1</td></tr>
+        <tr><td>31 ÷ 2 = 15</td><td>余 1</td></tr>
+        <tr><td>15 ÷ 2 = 7</td><td>余 1</td></tr>
+        <tr><td>7 ÷ 2 = 3</td><td>余 1</td></tr>
+        <tr><td>3 ÷ 2 = 1</td><td>余 1</td></tr>
+        <tr><td>1 ÷ 2 = 0</td><td>余 1</td></tr>
+      </table>
+      <p>从下往上：2025₁₀ = <strong>11111101001</strong>₂</p>
+      <p>数1的个数：<strong>8个</strong>（偶数）→ <strong>A类数</strong> ✓</p>
+      <div class="key-point">
+        也可以拆解：2025 = 1024+512+256+128+64+32+8+1 = 2¹⁰+2⁹+2⁸+2⁷+2⁶+2⁵+2³+2⁰，共8个幂次，所以二进制中有8个1。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T7 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">7</div>
+    <div class="question-type">判断题 · 循环</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>该段程序将 n 不停地除以 2，并输出此时的商和余数，直到 n=0 为止。</p>
+<pre><span class="kw">long long</span> n;
+cin &gt;&gt; n;
+<span class="kw">while</span>(n != 0) {
+    cout &lt;&lt; n/2 &lt;&lt; <span class="str">' '</span> &lt;&lt; n%2 &lt;&lt; <span class="str">'\n'</span>;
+    n /= 2;
+}</pre>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>循环每次输出 n/2（商）和 n%2（余数），然后 n 更新为 n/2。当 n 变为 0 时循环结束。这段程序实际上就是在模拟<strong>除2取余</strong>的过程。</p>
+    </div>
+  </div>
+</div>
+
+<!-- T8 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">8</div>
+    <div class="question-type">判断题 · 进制运算</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>两个13进制的数A和B，在10进制下分别表示10和11。（A+B）₁₃ =（18）₁₃。</p>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>A 在十进制 = 10，B 在十进制 = 11</li>
+        <li>A + B = 10 + 11 = <strong>21</strong>（十进制）</li>
+        <li>21 转换为13进制：21 ÷ 13 = <strong>1</strong> 余 <strong>8</strong></li>
+        <li>所以 (21)₁₀ = <strong>(18)₁₃</strong> ✓</li>
+      </ul>
+      <div class="key-point">
+        验证：1×13¹ + 8×13⁰ = 13 + 8 = 21 ✓
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T9 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">9</div>
+    <div class="question-type">判断题 · 进制概念</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>k 进制，逢 k 进一。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>这是进位制的基本定义：k进制中，每位满k就向高位进1。例如十进制逢10进1，二进制逢2进1，八进制逢8进1。</p>
+    </div>
+  </div>
+</div>
+
+<!-- T10 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">10</div>
+    <div class="question-type">判断题 · 进制验证</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>CCF（九进制）= 21AC（十三进制）。（不区分大小写）</p>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>关键错误：</strong>九进制中只能使用数字 0~8</li>
+        <li>C = 12，F = 15，这两个字符<strong>不是合法的九进制数字</strong></li>
+        <li>因此 "CCF" 根本不能是一个九进制数，该命题<strong>不成立</strong></li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">进制数字范围</span>
+        k进制只能使用 0 到 (k-1) 的数字。九进制的有效数字是 0~8。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第三部分：编程题 ==================== -->
+<h2 class="section-title" id="s3">三、编程题 <span class="badge">2题 × 25分 = 50分</span></h2>
+
+<!-- P1 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">P1</div>
+    <div class="question-type">编程题 · 位运算</div>
+    <div class="answer-badge correct">25分</div>
+  </div>
+  <div class="question-body">
+    <h3>题目：2025</h3>
+    <p><strong>题目描述：</strong>小A有一个整数 x，他想找到<strong>最小的正整数 k</strong> 使得下式成立：</p>
+    <p style="text-align:center;font-size:1.2em;font-weight:700;">(x &amp; k) + (x | k) = 2025</p>
+    <p>其中 &amp; 表示二进制<strong>按位与</strong>运算，| 表示二进制<strong>按位或</strong>运算。如果不存在满足条件的 k，则输出 -1。</p>
+
+    <p><strong>输入样例：</strong>1025</p>
+    <p><strong>输出样例：</strong>1000</p>
+    <p><strong>数据范围：</strong>1 ≤ x ≤ 10⁹</p>
+
+    <div class="explanation">
+      <h4>📝 详细解析</h4>
+      <p><strong>核心数学原理：</strong></p>
+      <p>对于任意两个整数 x 和 k，有一个重要恒等式：</p>
+      <p style="text-align:center;font-size:1.1em;"><strong>(x &amp; k) + (x | k) = x + k</strong></p>
+      <p><strong>为什么？</strong>按位来看：</p>
+      <ul>
+        <li>如果某一位上 x=0, k=0：x&amp;k=0, x|k=0, 和为 0 = x+k(0)</li>
+        <li>如果某一位上 x=0, k=1：x&amp;k=0, x|k=1, 和为 1 = x+k(1)</li>
+        <li>如果某一位上 x=1, k=0：x&amp;k=0, x|k=1, 和为 1 = x+k(1)</li>
+        <li>如果某一位上 x=1, k=1：x&amp;k=1, x|k=1, 和为 2 = x+k(2) ✓</li>
+      </ul>
+      <p>所以等式简化为：<strong>x + k = 2025</strong></p>
+      <p>因此：<strong>k = 2025 - x</strong></p>
+
+      <p><strong>示例验证：</strong></p>
+      <ul>
+        <li>输入 x = 1025</li>
+        <li>k = 2025 - 1025 = 1000</li>
+        <li>验证：1025 &amp; 1000 = ?</li>
+      </ul>
+      <pre>1025 = 100 0000 0001 (二进制)
+1000 = 011 1110 1000 (二进制)
+———————————————————————
+  &amp;  = 000 0000 0000 = 0
+  |   = 111 1110 1001 = 2025
+0 + 2025 = 2025 ✓</pre>
+
+      <p><strong>需要注意：</strong>k 必须是<strong>正整数</strong>。如果 x ≥ 2025，则 k ≤ 0，输出 -1。</p>
+    </div>
+
+    <h4>参考代码：</h4>
+<pre><span class="cp">#include &lt;cstdio&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">int</span> x;
+
+<span class="kw">int</span> main() {
+    scanf(<span class="str">"%d"</span>, &amp;x);
+    <span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt;= 2025; i++)
+        <span class="kw">if</span> ((x &amp; i) + (x | i) == 2025) {
+            printf(<span class="str">"%d\n"</span>, i);
+            <span class="kw">return</span> 0;
+        }
+    printf(<span class="str">"-1\n"</span>);
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="key-point">
+      <span class="tag formula">最优解法</span>
+      直接计算 <code>k = 2025 - x</code>，检查 k > 0 即可。时间复杂度 O(1)。参考程序使用枚举法（O(2025)），也能通过。
+    </div>
+  </div>
+</div>
+
+<!-- P2 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">P2</div>
+    <div class="question-type">编程题 · 字符串/Map</div>
+    <div class="answer-badge correct">25分</div>
+  </div>
+  <div class="question-body">
+    <h3>题目：词频统计</h3>
+    <p><strong>题目描述：</strong>给定 n 个单词，找出其中出现次数最多的单词。忽略单词中字母的大小写（即 Apple、apple、APPLE 均视为同一个单词）。输入保证出现次数最多的单词只会有一个。</p>
+
+    <p><strong>输入格式：</strong></p>
+    <ul>
+      <li>第一行，一个整数 n，表示单词的个数</li>
+      <li>接下来 n 行，每行包含一个单词（仅由大小写英文字母组成）</li>
+    </ul>
+
+    <p><strong>输出格式：</strong>输出出现次数最多的单词（小写形式）。</p>
+
+    <p><strong>输入样例：</strong></p>
+<pre>6
+Apple
+banana
+apple
+Orange
+banana
+apple</pre>
+    <p><strong>输出样例：</strong>apple</p>
+
+    <p><strong>数据范围：</strong>1 ≤ n ≤ 100，每个单词长度 ≤ 30</p>
+
+    <div class="explanation">
+      <h4>📝 详细解析</h4>
+      <p><strong>解题思路：</strong></p>
+      <ol>
+        <li><strong>读入</strong>所有单词，将每个单词统一转为<strong>小写</strong></li>
+        <li>使用 <code>map&lt;string, int&gt;</code> 统计每个单词出现的次数</li>
+        <li>遍历 map，找到出现次数最多的单词并输出</li>
+      </ol>
+
+      <p><strong>样例执行过程：</strong></p>
+      <table style="width:100%;border-collapse:collapse;margin:12px 0;">
+        <tr style="background:#f1f5f9;"><th>输入</th><th>转小写</th><th>计数变化</th></tr>
+        <tr><td>Apple</td><td>apple</td><td>apple: 1</td></tr>
+        <tr><td>banana</td><td>banana</td><td>banana: 1</td></tr>
+        <tr><td>apple</td><td>apple</td><td>apple: 2</td></tr>
+        <tr><td>Orange</td><td>orange</td><td>orange: 1</td></tr>
+        <tr><td>banana</td><td>banana</td><td>banana: 2</td></tr>
+        <tr><td>apple</td><td>apple</td><td><strong>apple: 3</strong></td></tr>
+      </table>
+      <p>最终：apple 出现 3 次（最多），banana 出现 2 次，orange 出现 1 次 → 输出 <strong>apple</strong></p>
+    </div>
+
+    <h4>参考代码：</h4>
+<pre><span class="cp">#include &lt;bits/stdc++.h&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">int</span> main() {
+    <span class="kw">int</span> n; cin &gt;&gt; n;
+    map&lt;string, <span class="kw">int</span>&gt; cnt;    <span class="cmt">// 统计每个单词的出现次数</span>
+    <span class="kw">int</span> mx = -1;               <span class="cmt">// 记录最大出现次数</span>
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt;= n; i++) {
+        string s; cin &gt;&gt; s;
+
+        <span class="cmt">// 转为小写</span>
+        transform(s.begin(), s.end(), s.begin(), ::tolower);
+
+        <span class="cmt">// 如果是新单词，先初始化为0</span>
+        <span class="kw">if</span> (!cnt.count(s))
+            cnt[s] = 0;
+
+        <span class="cmt">// 计数+1，并更新最大值</span>
+        mx = max(mx, ++cnt[s]);
+    }
+
+    <span class="cmt">// 输出出现次数最多的单词</span>
+    <span class="kw">for</span> (<span class="kw">auto</span> it = cnt.begin(); it != cnt.end(); it++)
+        <span class="kw">if</span> (it-&gt;second == mx) {
+            cout &lt;&lt; it-&gt;first &lt;&lt; <span class="str">'\n'</span>;
+            <span class="kw">break</span>;  <span class="cmt">// 题目保证只有一个，找到就退出</span>
+        }
+
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="key-point">
+      <span class="tag concept">核心知识点</span>
+      <strong>map 容器</strong>：自动按 key 排序的键值对 &nbsp;|&nbsp;
+      <strong>transform + tolower</strong>：将字符串转为小写 &nbsp;|&nbsp;
+      <strong>时间复杂度</strong>：O(n log n)
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>CCF GESP C++ 三级 2025年03月真题讲解 · 适用于小学生家长辅导</p>
+  <p>所有题目答案均来源于官方试卷标注，解析为详细推导过程</p>
+</footer>
+
+</div>
+</body>
+</html>

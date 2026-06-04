@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCF GESP C++ 三级 2025年09月 真题讲解</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #d97706;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 20px;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    border-radius: 16px;
+    margin-bottom: 32px;
+  }
+  header h1 { font-size: 2em; margin-bottom: 8px; }
+  header p { opacity: 0.9; font-size: 1.1em; }
+  .section-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 40px 0 20px;
+    padding: 12px 20px;
+    background: var(--primary);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .badge {
+    background: rgba(255,255,255,0.25);
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 400;
+  }
+  .answer-key {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .answer-key table { width: 100%; border-collapse: collapse; text-align: center; }
+  .answer-key th, .answer-key td {
+    padding: 8px 6px;
+    border: 1px solid var(--border);
+    font-size: 0.95em;
+  }
+  .answer-key th { background: #f1f5f9; font-weight: 600; }
+  .answer-key .ans { font-weight: 700; color: var(--primary); font-size: 1.1em; }
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .question-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .question-header {
+    background: #f1f5f9;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .question-num {
+    background: var(--primary);
+    color: white;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+  .question-type {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .answer-badge {
+    margin-left: auto;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9em;
+  }
+  .answer-badge.correct { background: #dcfce7; color: #166534; }
+  .answer-badge.wrong { background: #fef2f2; color: #991b1b; }
+  .question-body { padding: 20px; }
+  .question-body p { margin-bottom: 12px; }
+  .options { margin: 12px 0; padding-left: 8px; }
+  .options div {
+    padding: 6px 12px;
+    margin: 4px 0;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .options div.highlight {
+    background: #dbeafe;
+    font-weight: 600;
+    border-left: 3px solid var(--primary);
+  }
+  .explanation {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+  .explanation h4 {
+    color: #166534;
+    margin-bottom: 8px;
+    font-size: 1em;
+  }
+  .explanation ul { padding-left: 20px; }
+  .explanation li { margin: 4px 0; }
+  .explanation .key-point {
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin-top: 10px;
+    font-weight: 500;
+  }
+  pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 16px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-family: "Cascadia Code", "Fira Code", "JetBrains Mono", monospace;
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin: 12px 0;
+  }
+  pre .kw { color: #c084fc; }
+  pre .fn { color: #60a5fa; }
+  pre .str { color: #a3e635; }
+  pre .num { color: #fb923c; }
+  pre .cmt { color: #6b7280; font-style: italic; }
+  pre .op { color: #fbbf24; }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin: 0 2px;
+  }
+  .tag.concept { background: #ede9fe; color: #6d28d9; }
+  .tag.formula { background: #fce7f3; color: #be185d; }
+  .tag.calc { background: #e0f2fe; color: #0369a1; }
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 28px;
+    margin-bottom: 32px;
+  }
+  .toc h3 { margin-bottom: 12px; }
+  .toc a { color: var(--primary); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc ul { padding-left: 20px; }
+  .toc li { margin: 4px 0; }
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-size: 0.9em;
+  }
+  @media (max-width: 640px) {
+    body { padding: 10px; }
+    header { padding: 24px 16px; }
+    header h1 { font-size: 1.4em; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>CCF GESP 认证 C++ 三级</h1>
+  <p>2025年09月 · 真题详解</p>
+  <p style="font-size:0.9em;margin-top:8px;">适合小学生理解的详细解题过程</p>
+</header>
+
+<!-- ==================== 目录 ==================== -->
+<div class="toc">
+  <h3>📋 目录</h3>
+  <ul>
+    <li><a href="#s1">一、单选题（15题，每题2分，共30分）</a></li>
+    <li><a href="#s2">二、判断题（10题，每题2分，共20分）</a></li>
+    <li><a href="#s3">三、编程题（2题，每题25分，共50分）</a></li>
+  </ul>
+</div>
+
+<!-- ==================== 第一部分：单选题 ==================== -->
+<h2 class="section-title" id="s1">一、单选题 <span class="badge">15题 × 2分 = 30分</span></h2>
+
+<div class="answer-key">
+  <table>
+    <tr><th>题号</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr>
+    <tr><th>答案</th>
+      <td class="ans">C</td><td class="ans">C</td><td class="ans">D</td><td class="ans">B</td>
+      <td class="ans">B</td><td class="ans">B</td><td class="ans">B</td><td class="ans">D</td>
+      <td class="ans">A</td><td class="ans">C</td><td class="ans">D</td><td class="ans">C</td>
+      <td class="ans">D</td><td class="ans">C</td><td class="ans">D</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Q1 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">1</div>
+    <div class="question-type">单选题 · 整数除法</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>执行以下C++代码后，c 的数值是（ ）</p>
+<pre><span class="kw">int</span> a = <span class="num">10</span>, b = <span class="num">3</span>;
+<span class="kw">double</span> c = a / b;</pre>
+    <div class="options">
+      <div>A. 3.33333</div>
+      <div>B. 3.333</div>
+      <div class="highlight">C. 3.0 ✓</div>
+      <div>D. 3.3</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>a 和 b 都是 <strong>int</strong> 类型，所以 <code>a / b</code> 先执行<strong>整数除法</strong></li>
+        <li>10 ÷ 3（整数除法）= <strong>3</strong>（小数部分被丢弃）</li>
+        <li>然后 int 值 3 被<strong>隐式转换</strong>为 double 赋给 c → <strong>3.0</strong></li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">关键陷阱</span>
+        如果想得到 3.333...，需要先转换：<code>double c = (double)a / b;</code> 或 <code>double c = 1.0 * a / b;</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">2</div>
+    <div class="question-type">单选题 · 逻辑表达式</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>下列C++表达式的结果为 true 的是（ ）</p>
+    <div class="options">
+      <div>A. (5 <= 5) && (7 < 5)</div>
+      <div>B. !(10 > 5)</div>
+      <div class="highlight">C. (10 != 10) || (5 >= 3) ✓</div>
+      <div>D. (5 == 3) && (4 > 2)</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>A：</strong><code>(5&lt;=5)=true</code>，<code>(7&lt;5)=false</code> → true &amp;&amp; false = <strong>false</strong></li>
+        <li><strong>B：</strong><code>(10&gt;5)=true</code> → !true = <strong>false</strong></li>
+        <li><strong>C：</strong><code>(10!=10)=false</code>，<code>(5&gt;=3)=true</code> → false || true = <strong>true</strong> ✓</li>
+        <li><strong>D：</strong><code>(5==3)=false</code>，false &amp;&amp; ... → <strong>false</strong>（短路）</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">逻辑运算符规则</span>
+        <code>&amp;&amp;</code>(与)：两边都true才true&nbsp;|&nbsp; <code>||</code>(或)：一边true就true&nbsp;|&nbsp; <code>!</code>(非)：取反
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">3</div>
+    <div class="question-type">单选题 · 数组基础</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下关于C++数组的说法，错误的是（ ）</p>
+    <div class="options">
+      <div>A. 数组的下标通常从 0 开始。</div>
+      <div>B. int arr[5]; 声明了一个包含5个整数的数组。</div>
+      <div>C. 数组的大小必须在编译时确定，不能使用变量定义大小。</div>
+      <div class="highlight">D. 可以通过 arr[5] 来访问 int arr[5]; 数组的最后一个元素。 ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>A ✓ 正确 — C++ 数组索引从 0 开始</li>
+        <li>B ✓ 正确 — <code>int arr[5]</code> 定义了5个元素的数组</li>
+        <li>C ✓ 正确 — C++ 标准（不含VLA扩展）要求数组大小是编译时常量</li>
+        <li>D ✗ <strong>错误！</strong><code>int arr[5]</code> 的有效索引是 <strong>0~4</strong>，最后一个元素是 <strong>arr[4]</strong>，不是 arr[5]。arr[5] 是<strong>越界访问</strong>！</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">n元素数组的有效索引</span>
+        始终是 <strong>0 到 n-1</strong>，访问 arr[n] 是常见的数组越界错误。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">4</div>
+    <div class="question-type">单选题 · 作用域</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>执行以下C++代码后，变量 sum 的值是（ ）</p>
+<pre><span class="kw">int</span> sum = <span class="num">0</span>;
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">5</span>; i += <span class="num">2</span>) {
+    sum += i;
+    <span class="kw">int</span> sum = <span class="num">0</span>;
+}</pre>
+    <div class="options">
+      <div>A. 6</div>
+      <div class="highlight">B. 9 ✓</div>
+      <div>C. 15</div>
+      <div>D. 死循环</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <p>这是经典的<strong>变量遮蔽（shadowing）</strong>问题：</p>
+      <ul>
+        <li>外层 <code>int sum = 0;</code> 是我们要跟踪的变量</li>
+        <li>循环内 <code>int sum = 0;</code> 声明了一个<strong>新的局部变量</strong> sum，它遮蔽了外层 sum，但<strong>不影响外层 sum</strong></li>
+      </ul>
+      <p><strong>逐步执行：</strong></p>
+      <ul>
+        <li>i=1：sum += 1 → 外层 sum=1，内层创建 sum=0（作用域结束时销毁）</li>
+        <li>i=3：sum += 3 → 外层 sum=4</li>
+        <li>i=5：sum += 5 → 外层 sum=<strong>9</strong></li>
+        <li>i=7 > 5 循环结束</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">变量遮蔽</span>
+        内层代码块中的同名变量会"遮住"外层变量，但它们是完全不同的两个变量。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">5</div>
+    <div class="question-type">单选题 · 函数定义</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>要正确定义一个返回两个整数中较大值的函数 max，应该使用（ ）</p>
+    <div class="options">
+      <div>A. void max(int a, int b) { return a > b ? a : b; }</div>
+      <div class="highlight">B. int max(int a, int b) { if (a > b) return a; else return b; } ✓</div>
+      <div>C. int max(a, b) { if (a > b) return a; else return b; }</div>
+      <div>D. void max(a, b) { cout << (a > b ? a : b); }</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>A：</strong>声明返回 void，却 return 了 int 值 → 类型不匹配 ✗</li>
+        <li><strong>B：</strong>返回类型 int，参数有类型声明，逻辑正确 ✓</li>
+        <li><strong>C：</strong>参数 a, b 缺少<strong>类型声明</strong> → 编译错误 ✗</li>
+        <li><strong>D：</strong>参数缺少类型 + void 类型无返回值 → 双重错误 ✗</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">函数定义要素</span>
+        正确的函数需要：<strong>返回类型 + 函数名 + 带类型的参数列表 + 函数体</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">6</div>
+    <div class="question-type">单选题 · 数组操作</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>执行以下C++代码后，数组 arr 的内容是（ ）</p>
+<pre><span class="kw">int</span> arr[<span class="num">4</span>] = {<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>};
+arr[<span class="num">3</span>] = arr[<span class="num">0</span>] + arr[<span class="num">2</span>];</pre>
+    <div class="options">
+      <div>A. {1, 2, 3, 3}</div>
+      <div class="highlight">B. {1, 2, 3, 4} ✓</div>
+      <div>C. {1, 2, 3, 5}</div>
+      <div>D. {1, 2, 3, 6}</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>初始化后：arr[0]=1, arr[1]=2, arr[2]=3, arr[3]=0（未指定，默认0）</li>
+        <li>执行 arr[3] = arr[0] + arr[2]</li>
+        <li>arr[3] = 1 + 3 = <strong>4</strong></li>
+      </ul>
+      <p>最终数组：<strong>{1, 2, 3, 4}</strong></p>
+      <div class="key-point">
+        <span class="tag concept">数组初始化</span>
+        <code>{1,2,3}</code> 部分初始化时，剩余元素自动填0。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">7</div>
+    <div class="question-type">单选题 · 函数特性</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下关于C++函数的描述，正确的是（ ）</p>
+    <div class="options">
+      <div>A. 函数必须要有参数。</div>
+      <div class="highlight">B. 函数通过 return 语句只能返回一个值，但是可以通过很多间接的方式返回多个值。 ✓</div>
+      <div>C. main 函数可以被其他函数调用。</div>
+      <div>D. 函数的定义可以直接嵌套，即一个函数内部可以真正定义另一个函数。</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>A：</strong>错误。函数可以没有参数，如 <code>void f() { }</code></li>
+        <li><strong>B：</strong>正确。return 直接返回一个值，但可以通过<strong>引用参数、指针、全局变量</strong>等方式间接返回多个值。</li>
+        <li><strong>C：</strong>错误。C++ 标准不允许在程序中调用 main 函数。</li>
+        <li><strong>D：</strong>错误。C++ <strong>不支持函数嵌套定义</strong>（可以在函数内声明，但不能定义）。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">返回多个值的方法</span>
+        引用传参 <code>void f(int&amp; a, int&amp; b)</code>、返回 struct/pair/tuple、使用指针参数。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">8</div>
+    <div class="question-type">单选题 · continue 陷阱</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下C++代码 count++ 执行的次数是（ ）</p>
+<pre><span class="kw">int</span> i = <span class="num">10</span>;
+<span class="kw">int</span> count = <span class="num">0</span>;
+<span class="kw">while</span> (i &gt; <span class="num">0</span>) {
+    i -= <span class="num">3</span>;
+    <span class="kw">continue</span>;
+    count++;
+}</pre>
+    <div class="options">
+      <div>A. 2</div>
+      <div>B. 3</div>
+      <div>C. 4</div>
+      <div class="highlight">D. 0 ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><code>continue</code> 的作用是：<strong>跳过循环体中剩余的语句，直接进入下一次循环</strong></li>
+        <li><code>count++</code> 在 continue 之后，<strong>永远执行不到！</strong></li>
+        <li>所以 count++ 执行次数 = <strong>0 次</strong></li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">continue 的作用</span>
+        continue 跳过当前迭代的<strong>剩余部分</strong>，但不会退出循环。循环本身仍会正常执行（i 会减少），只是 count++ 被跳过了。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">9</div>
+    <div class="question-type">单选题 · 嵌套循环</div>
+    <div class="answer-badge correct">答案：A</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下C++代码段的输出是（ ）</p>
+<pre><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">4</span>; i++) {
+    <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">0</span>; j &lt;= i; j++) {
+        cout &lt;&lt; j;
+    }
+    cout &lt;&lt; <span class="str">"#"</span>;
+}</pre>
+    <div class="options">
+      <div class="highlight">A. 0#01#012#0123# ✓</div>
+      <div>B. 1#12#123#1234#</div>
+      <div>C. 0#1#2#3#</div>
+      <div>D. 0#01#012#01243#</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <p>逐轮推演：</p>
+      <ul>
+        <li><strong>i=0：</strong>j 从 0 到 0 → 输出 "0"，然后 "#" → <strong>0#</strong></li>
+        <li><strong>i=1：</strong>j 从 0 到 1 → 输出 "01"，然后 "#" → <strong>01#</strong></li>
+        <li><strong>i=2：</strong>j 从 0 到 2 → 输出 "012"，然后 "#" → <strong>012#</strong></li>
+        <li><strong>i=3：</strong>j 从 0 到 3 → 输出 "0123"，然后 "#" → <strong>0123#</strong></li>
+      </ul>
+      <p>拼接：<strong>0#01#012#0123#</strong></p>
+      <div class="key-point">
+        <span class="tag calc">规律</span>
+        第 i 轮输出 0 到 i 的所有数字，然后跟一个 #。整体形成一种"增长三角形"。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">10</div>
+    <div class="question-type">单选题 · 作用域</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下关于C++变量作用域的说法，错误的是（ ）</p>
+    <div class="options">
+      <div>A. 在 for 循环语句中声明的变量，其作用域仅限于该循环体内。</div>
+      <div>B. 在函数内部声明的变量（局部变量），仅在函数内部有效。</div>
+      <div class="highlight">C. 在所有函数外部声明的变量，在整个程序中都有效。 ✓</div>
+      <div>D. 不同函数中的局部变量可以同名，它们代表不同的内存单元。</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>A ✓ — for 循环头中声明的变量，作用域仅限于循环体</li>
+        <li>B ✓ — 局部变量只在声明它的函数内部有效</li>
+        <li><strong>C ✗ — 错误！</strong>全局变量的作用域是从<strong>声明位置</strong>开始到文件末尾。声明之前的函数不能访问它。而且在多文件程序中，没有 extern 的全局变量不能跨文件使用，并非"整个程序"都有效。</li>
+        <li>D ✓ — 不同函数中的局部变量相互独立，互不影响</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">全局变量限制</span>
+        全局变量只在其<strong>声明点之后</strong>的函数中可见，且默认只在当前文件中有效（需 extern 才能跨文件）。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">11</div>
+    <div class="question-type">单选题 · 整数反转</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>关于以下代码的说法正确的是（ ）</p>
+<pre><span class="kw">int</span> reversed = <span class="num">0</span>;
+<span class="kw">while</span> (x != <span class="num">0</span>) {
+    <span class="kw">int</span> digit = x % <span class="num">10</span>;
+    x /= <span class="num">10</span>;
+    reversed = reversed * <span class="num">10</span> + digit;
+}</pre>
+    <div class="options">
+      <div>A. 能够反转任何位数的整数</div>
+      <div>B. 能够反转的最大位数正整数是 2147483647</div>
+      <div>C. 能够反转的最大位数正整数是 2147483648</div>
+      <div class="highlight">D. 能够反转的最大位数正整数是 1463847412 ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <p>这段代码用于<strong>反转整数 x 的各位数字</strong>。例如 x=123 → reversed=321。</p>
+      <p>但 int 类型（32位）的范围是 -2147483648 ～ 2147483647。反转一个数可能导致<strong>溢出</strong>。</p>
+      <p><strong>1463847412</strong> 反转后是 2147483641，仍在 int 范围内。而<strong>1463847413</strong> 反转后是 3147483641，超过 INT_MAX，会溢出。</p>
+      <p>所以能够正确反转的最大10位正整数是 <strong>1463847412</strong>。</p>
+      <div class="key-point">
+        <span class="tag formula">INT_MAX</span>
+        32位有符号整数最大值为 <strong>2147483647</strong>（约21亿）。反转时要保证结果不超出此范围。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">12</div>
+    <div class="question-type">单选题 · 查找最大值</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下C++代码试图查找数组中的最大值，划线处应填入（ ）</p>
+<pre><span class="kw">int</span> <span class="fn">findMax</span>(<span class="kw">int</span> arr[], <span class="kw">int</span> size) {
+    <span class="kw">int</span> maxVal = ________; <span class="cmt">// 划线处</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt; size; i++) {
+        <span class="kw">if</span> (arr[i] &gt; maxVal) {
+            maxVal = arr[i];
+        }
+    }
+    <span class="kw">return</span> maxVal;
+}</pre>
+    <div class="options">
+      <div>A. 0</div>
+      <div>B. arr[-1]</div>
+      <div class="highlight">C. arr[0] ✓</div>
+      <div>D. size</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>循环从 i=1 开始，逐个与 maxVal 比较</li>
+        <li>maxVal 需要初始化为<strong>数组的第一个元素</strong> = <strong>arr[0]</strong></li>
+        <li>A：初始化为 0 — 如果数组全是负数，会错误地返回 0</li>
+        <li>B：arr[-1] — 越界访问，不合法</li>
+        <li>D：size — 长度和元素值没有关系</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">最佳实践</span>
+        遍历查找最大值时，初始化 maxVal 为 <strong>arr[0]</strong>，然后从 i=1 开始比较。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">13</div>
+    <div class="question-type">单选题 · 函数声明</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下关于C++函数的说法，正确的是（ ）</p>
+    <div class="options">
+      <div>A. 函数参数传递只有值传递一种方式。</div>
+      <div>B. 函数的形参在函数调用结束后依然占用内存空间。</div>
+      <div>C. 没有返回值的函数必须声明为 void 类型，且不能包含 return 语句。</div>
+      <div class="highlight">D. C++11 及之后标准要求函数必须显式声明返回类型，不允许默认返回 int。 ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>A：</strong>错误。C++ 还有<strong>引用传递</strong>（&amp;）和<strong>指针传递</strong>（*）</li>
+        <li><strong>B：</strong>错误。形参在函数调用<strong>结束后被释放</strong></li>
+        <li><strong>C：</strong>错误。void 函数可以写 <code>return;</code>（不带值）来提前退出</li>
+        <li><strong>D：</strong>正确。C 语言可以不写返回类型（默认 int），但 <strong>C++11 起禁止</strong>了这种隐式 int 的写法</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">C vs C++ 差异</span>
+        C89允许省略返回类型（默认int），C++11及之后<strong>必须显式声明</strong>返回类型。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">14</div>
+    <div class="question-type">单选题 · 代码查错</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下C++代码中存在几处错误（ ）</p>
+<pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+<span class="kw">int</span> main() {
+    <span class="kw">const int</span> SIZE = <span class="num">5</span>;
+    <span class="kw">int</span> arr[SIZE];
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt;= SIZE; i++) {  <span class="cmt">// ← 错误1</span>
+        arr[i] = i * <span class="num">2</span>;
+    }
+    cout &lt;&lt; arr[SIZE] &lt;&lt; endl;           <span class="cmt">// ← 错误2</span>
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+    <div class="options">
+      <div>A. 0处</div>
+      <div>B. 1处</div>
+      <div class="highlight">C. 2处 ✓</div>
+      <div>D. 3处</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <p>注意 <code>const int SIZE=5; int arr[SIZE];</code> 这是<strong>合法的</strong>（SIZE 是编译时常量）。</p>
+      <p><strong>错误1：</strong><code>i <= SIZE</code> — 应改为 <code>i < SIZE</code>。当 i=5 时，arr[5] 是<strong>越界访问</strong>（有效索引 0~4）。</p>
+      <p><strong>错误2：</strong><code>arr[SIZE]</code> — 同上，arr[5] 越界。</p>
+      <p>共 <strong>2 处</strong>错误，都是<strong>数组越界</strong>。</p>
+      <div class="key-point">
+        <span class="tag concept">数组越界</span>
+        数组越界是 C++ 中最常见的 bug 之一，编译器不会报错，但运行时可能导致崩溃或数据损坏。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">15</div>
+    <div class="question-type">单选题 · string vs char[]</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下关于C++中 string 类和字符数组( char[] )的说法，错误的是（ ）</p>
+    <div class="options">
+      <div>A. string 对象可以使用 = 进行赋值，而字符数组需要使用 strcpy。</div>
+      <div>B. string 对象的长度可以使用 length() 成员函数获取，而字符数组需要使用 strlen() 函数。</div>
+      <div>C. string 对象在内存中是动态分配空间的，因此可以自动处理字符串长度的变化。</div>
+      <div class="highlight">D. string 对象和字符数组都可以使用 == 运算符来直接比较两个字符串的内容是否相同。 ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>A ✓ — string 重载了 =，char[] 数组名是指针常量不能赋值</li>
+        <li>B ✓ — string::length()，char[] 用 strlen()</li>
+        <li>C ✓ — string 内部分配在堆上，长度可动态变化</li>
+        <li><strong>D ✗ — 错误！</strong>string 可以用 == 比较内容，但 <strong>char[] 不能</strong>！char[] 用 == 比较的是<strong>地址</strong>（数组名退化为指针），不是内容。char[] 需要用 <code>strcmp()</code> 比较内容。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">重要区分</span>
+        <code>string</code> 的 == 比较<strong>内容</strong>&nbsp;|&nbsp; <code>char[]</code> 的 == 比较<strong>地址</strong>，需用 <code>strcmp()</code> 比较内容。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第二部分：判断题 ==================== -->
+<h2 class="section-title" id="s2">二、判断题 <span class="badge">10题 × 2分 = 20分</span></h2>
+
+<div class="answer-key">
+  <table>
+    <tr><th>题号</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+    <tr><th>答案</th>
+      <td class="ans">✓</td><td class="ans">✓</td><td class="ans">✓</td><td class="ans">✓</td>
+      <td class="ans">✓</td><td class="ans">✗</td><td class="ans">✗</td><td class="ans">✓</td>
+      <td class="ans">✗</td><td class="ans">✗</td>
+    </tr>
+  </table>
+  <p style="margin-top:10px;font-size:0.85em;color:var(--text-secondary);">⚠ PDF中判断题答案为特殊符号无法提取，以下答案基于C++标准知识判定，如与官方有出入请以官方为准。</p>
+</div>
+
+<!-- T1 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">1</div>
+    <div class="question-type">判断题 · sizeof</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>表达式 sizeof('a') 的结果总是 1，因为 'a' 是一个字符。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>在C++中，字符字面量 <code>'a'</code> 的类型是 <strong>char</strong>，而 <code>sizeof(char)</code> 在C++标准中<strong>定义为 1</strong>。所以 <code>sizeof('a')</code> 始终等于 1。</p>
+      <div class="key-point">
+        <span class="tag concept">C vs C++ 差异</span>
+        C语言中 <code>'a'</code> 的类型是 int，所以 sizeof('a') = 4（通常）。但在 <strong>C++</strong> 中 'a' 是 char 类型，sizeof = 1。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T2 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">2</div>
+    <div class="question-type">判断题 · 全局变量初始化</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>在C++中，所有全局变量如果没有显式初始化，都会被自动初始化为0。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>C++中，具有<strong>静态存储期</strong>的变量（全局变量、static 变量）如果没有显式初始化，会被<strong>零初始化</strong>（整型为0，浮点为0.0，指针为nullptr）。</p>
+      <div class="key-point">
+        这与<strong>局部变量</strong>不同——局部变量不初始化则包含垃圾值。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T3 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">3</div>
+    <div class="question-type">判断题 · do-while</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>do { ... } while (false); 循环体内的语句至少会被执行一次。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>do-while 循环的语义是<strong>先执行循环体，再检查条件</strong>。即使条件是 false，循环体也已经执行过一次了。所以 do-while(false) 中的语句恰好执行<strong>一次</strong>。</p>
+      <div class="key-point">
+        <span class="tag concept">while vs do-while</span>
+        while 先判断后执行（可能0次）&nbsp;|&nbsp; do-while 先执行后判断（至少1次）
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T4 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">4</div>
+    <div class="question-type">判断题 · 左值与右值</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>在C++中，++i 是一个左值表达式，而 i++ 是一个右值表达式。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong></p>
+      <ul>
+        <li><code>++i</code>（前置自增）返回<strong>自增后的 i 本身</strong>（引用），是<strong>左值</strong>，可以对其赋值：<code>++i = 5;</code> 合法</li>
+        <li><code>i++</code>（后置自增）返回<strong>自增前的临时值</strong>，是<strong>右值</strong>，不能赋值：<code>i++ = 5;</code> 编译错误</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">左值 vs 右值</span>
+        左值可以出现在赋值号左边（有内存地址），右值只能出现在赋值号右边（临时值）。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T5 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">5</div>
+    <div class="question-type">判断题 · 枚举类型</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>对于 enum Color { RED, GREEN, BLUE }; ，RED 的类型是 int。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>对于无作用域枚举（unscoped enum），枚举值可以<strong>隐式转换</strong>为 int 类型。RED、GREEN、BLUE 的值分别是 0、1、2，都是 int 类型的常量。在 GESP 三级的考查范围内，枚举值被视为 int 类型的整数常量。</p>
+      <div class="key-point">
+        严格来说 C++11 中 RED 的类型是 Color（枚举类型），但可以隐式转换为 int。初学者层次通常理解为 int。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T6 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">6</div>
+    <div class="question-type">判断题 · 宏定义陷阱</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>#define SQUARE(x) x * x 是一个安全的宏定义，SQUARE(2+3) 会正确计算出 25。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>错误！</strong>宏只是<strong>简单的文本替换</strong>，不会自动加括号。</p>
+      <p>SQUARE(2+3) 展开后是：<code>2+3 * 2+3</code></p>
+      <p>根据运算符优先级（乘法优先）：<code>2 + (3×2) + 3 = 2 + 6 + 3 = <strong>11</strong></code></p>
+      <p>不是 25！安全的宏应该写为：<code>#define SQUARE(x) ((x) * (x))</code></p>
+      <div class="key-point">
+        <span class="tag concept">宏安全原则</span>
+        宏定义中的每个参数和整个表达式都应该用<strong>括号括起来</strong>，避免优先级错误。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T7 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">7</div>
+    <div class="question-type">判断题 · char 范围</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>在C++中，char 类型的取值范围总是 -128 到 127。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>错误！</strong>C++ 标准规定 <code>char</code> 可以是 <strong>signed char</strong> 或 <strong>unsigned char</strong>，具体由编译器决定。</p>
+      <ul>
+        <li>signed char：-128 ～ 127</li>
+        <li>unsigned char：0 ～ 255</li>
+      </ul>
+      <p>所以 char 的取值<strong>不一定</strong>是 -128 到 127，也可能是 0 到 255。</p>
+      <div class="key-point">
+        <span class="tag concept">三种字符类型</span>
+        <code>char</code>（实现定义）、<code>signed char</code>（一定有符号）、<code>unsigned char</code>（一定无符号）是三种不同的类型。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T8 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">8</div>
+    <div class="question-type">判断题 · 三元运算符</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>表达式 a > b ? a : b = 10; 一定是合法的C++代码。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>需要注意的是<strong>运算符优先级</strong>：三元运算符 <code>?:</code> 的优先级<strong>高于</strong>赋值运算符 <code>=</code>。</p>
+      <p>所以实际解析为：<code>a > b ? a : (b = 10);</code></p>
+      <p>当 a > b 时返回 a（不使用），否则执行 b = 10。这在语法上是<strong>完全合法</strong>的C++代码。</p>
+      <div class="key-point">
+        <span class="tag concept">运算符优先级</span>
+        <code>?:</code> 优先级高于 <code>=</code>，所以 <code>a > b ? a : b = 10</code> 不等于 <code>(a > b ? a : b) = 10</code>。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T9 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">9</div>
+    <div class="question-type">判断题 · include 路径</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>#include "file.h" 和 #include &lt;file.h&gt; 在编译器查找头文件时的搜索策略是完全相同的。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>错误！</strong>两种形式的搜索策略<strong>不同</strong>：</p>
+      <ul>
+        <li><code>#include "file.h"</code>：先在<strong>当前目录</strong>查找，找不到再去<strong>标准库路径</strong>查找</li>
+        <li><code>#include &lt;file.h&gt;</code>：只在<strong>标准库路径</strong>中查找</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">使用场景</span>
+        自己的头文件用 <code>""</code>，系统/标准库头文件用 <code>&lt;&gt;</code>。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T10 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">10</div>
+    <div class="question-type">判断题 · extern</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>在同一个作用域内，extern 声明的变量可以多次定义。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>错误！</strong><code>extern</code> 是<strong>声明</strong>而非定义（除非带有初始化器）。C++遵循<strong>一次定义规则（ODR）</strong>：每个变量只能<strong>定义一次</strong>，但可以<strong>声明多次</strong>。题目中说"多次定义"是错误的。</p>
+      <div class="key-point">
+        <span class="tag concept">声明 vs 定义</span>
+        <code>extern int x;</code> 是声明（不分配内存）&nbsp;|&nbsp; <code>int x = 5;</code> 是定义（分配内存）。变量只能定义一次！
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第三部分：编程题 ==================== -->
+<h2 class="section-title" id="s3">三、编程题 <span class="badge">2题 × 25分 = 50分</span></h2>
+
+<!-- P1 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">P1</div>
+    <div class="question-type">编程题 · 模拟 / 数组清零</div>
+    <div class="answer-badge correct">25分</div>
+  </div>
+  <div class="question-body">
+    <h3>题目：数组清零</h3>
+    <p><strong>时间限制：</strong>1.0 s &nbsp;|&nbsp; <strong>内存限制：</strong>512.0 MB</p>
+
+    <p><strong>题目描述：</strong>小A有一个由 n 个非负整数构成的数组。他会重复以下操作直到数组只包含0：</p>
+    <ol>
+      <li>找到最大的整数，记其下标为 mx。有多个最大值时选<strong>下标最大</strong>的</li>
+      <li>找到所有<strong>不为零</strong>的整数中最小的那个，记为 mn</li>
+      <li>将 a[mx] 减去 mn</li>
+    </ol>
+    <p>求需要多少次操作才能使数组全部变成 0。</p>
+
+    <p><strong>输入格式：</strong>第一行一个正整数 n；第二行 n 个非负整数。</p>
+    <p><strong>输出格式：</strong>一行一个正整数，表示操作次数。</p>
+
+    <p><strong>输入样例 1：</strong></p>
+<pre>3
+2 3 4</pre>
+    <p><strong>输出样例 1：</strong></p>
+<pre>7</pre>
+    <p><strong>输入样例 2：</strong></p>
+<pre>5
+1 3 2 2 5</pre>
+    <p><strong>输出样例 2：</strong></p>
+<pre>13</pre>
+
+    <div class="explanation">
+      <h4>📝 详细解析</h4>
+      <p><strong>核心思路：模拟操作过程，直到所有元素变为0。</strong></p>
+      <p><strong>样例1推演 [2, 3, 4]：</strong></p>
+      <ol>
+        <li>最大值 a[3]=4，非零最小值 2（a[1]=2）→ a[3]=4-2=2 → [2,3,2]，操作1次</li>
+        <li>最大值 a[2]=3，最小值 2 → a[2]=1 → [2,1,2]，2次</li>
+        <li>最大值 a[1]/a[3]=2（选下标大的a[3]），最小值 1 → a[3]=1 → [2,1,1]，3次</li>
+        <li>最大值 a[1]=2，最小值 1 → a[1]=1 → [1,1,1]，4次</li>
+        <li>最大值 a[1]/a[2]/a[3]=1（选a[3]），最小值 1 → a[3]=0 → [1,1,0]，5次</li>
+        <li>最大值 a[1]/a[2]=1（选a[2]），最小值 1 → a[2]=0 → [1,0,0]，6次</li>
+        <li>最大值 a[1]=1，最小值 1 → a[1]=0 → [0,0,0]，<strong>7次</strong> ✓</li>
+      </ol>
+      <p><strong>算法要点：</strong></p>
+      <ul>
+        <li>每次操作选<strong>最大的数</strong>减掉<strong>最小的非零数</strong></li>
+        <li>有多个最大值时选<strong>下标最大</strong>的</li>
+        <li>重复直到最大值为 0</li>
+      </ul>
+    </div>
+
+    <h4>参考代码：</h4>
+<pre><span class="cp">#include &lt;algorithm&gt;</span>
+<span class="cp">#include &lt;cstdio&gt;</span>
+
+<span class="kw">using namespace</span> std;
+
+<span class="kw">const int</span> N = <span class="num">105</span>;
+
+<span class="kw">int</span> n;
+<span class="kw">int</span> a[N];
+<span class="kw">int</span> cnt;
+
+<span class="kw">int</span> main() {
+    scanf(<span class="str">"%d"</span>, &amp;n);
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= n; i++) scanf(<span class="str">"%d"</span>, &amp;a[i]);
+    <span class="kw">while</span> (<span class="num">1</span>) {
+        <span class="kw">int</span> mx = n;
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= n; i++)
+            <span class="kw">if</span> (a[i] &gt;= a[mx]) mx = i;   <span class="cmt">// 找最大值：注意 &gt;= 保证选下标最大的</span>
+        <span class="kw">if</span> (a[mx] == <span class="num">0</span>) <span class="kw">break</span>;          <span class="cmt">// 全是0，结束</span>
+        <span class="kw">int</span> mn = a[mx];
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= n; i++)
+            <span class="kw">if</span> (a[i] &gt; <span class="num">0</span>) mn = min(mn, a[i]); <span class="cmt">// 找非零最小值</span>
+        a[mx] -= mn;                       <span class="cmt">// 最大值减去最小值</span>
+        cnt++;
+    }
+    printf(<span class="str">"%d\n"</span>, cnt);
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+    <div class="key-point">
+      <span class="tag formula">时间复杂度</span>
+      最多操作次数等于所有元素之和（每次至少减1），O(n × sum)，数据范围小时可行。
+    </div>
+  </div>
+</div>
+
+<!-- P2 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">P2</div>
+    <div class="question-type">编程题 · 模拟 / 日历制作</div>
+    <div class="answer-badge correct">25分</div>
+  </div>
+  <div class="question-body">
+    <h3>题目：日历制作</h3>
+    <p><strong>时间限制：</strong>1.0 s &nbsp;|&nbsp; <strong>内存限制：</strong>512.0 MB</p>
+
+    <p><strong>题目描述：</strong>小A想制作 2025 年每个月的日历。按照以下格式输出：第一行输出 <code>MON TUE WED THU FRI SAT SUN</code>，接下来输出日期，日期的个位需要和对应星期几的<strong>缩写最后一个字母</strong>对齐。</p>
+    <p>已知 2025 年 9 月 1 日是星期一。</p>
+
+    <p><strong>输入格式：</strong>一行一个正整数 m，表示月份。</p>
+    <p><strong>输出格式：</strong>2025 年 m 月的日历。</p>
+
+    <p><strong>输入样例 1：</strong></p>
+<pre>9</pre>
+    <p><strong>输出样例 1：</strong></p>
+<pre>MON TUE WED THU FRI SAT SUN
+  1   2   3   4   5   6   7
+  8   9  10  11  12  13  14
+ 15  16  17  18  19  20  21
+ 22  23  24  25  26  27  28
+ 29  30</pre>
+    <p><strong>输入样例 2：</strong></p>
+<pre>6</pre>
+    <p><strong>输出样例 2：</strong></p>
+<pre>MON TUE WED THU FRI SAT SUN
+                         1
+ 2   3   4   5   6   7   8
+ 9  10  11  12  13  14  15
+16  17  18  19  20  21  22
+23  24  25  26  27  28  29
+30</pre>
+
+    <div class="explanation">
+      <h4>📝 详细解析</h4>
+      <p><strong>核心思路：</strong></p>
+      <ol>
+        <li><strong>确定每月天数：</strong>2025年不是闰年，2月有28天，各月天数存入数组</li>
+        <li><strong>计算月初是星期几：</strong>已知9月1日是周一(星期1)，以此为基准推算其他月份</li>
+        <li><strong>格式化输出：</strong>使用 <code>printf("%3d", i)</code> 保证每个日期占3个字符宽度，日期个位自然对齐星期缩写最后一个字母</li>
+      </ol>
+      <p><strong>星期推算公式：</strong></p>
+      <ul>
+        <li>从9月往前推：w = ((w - days[i]) % 7 + 7) % 7，运算后0视为7(周日)</li>
+        <li>从9月往后推：w = (w + days[i] - 1) % 7 + 1</li>
+      </ul>
+      <p><strong>6月验证：</strong>9月1日周一，则6月1日是周日(第7天)。日历第一行需要6个空位，1号在第7个位置。输出样例2中6月1日在SUN列，验证正确。</p>
+    </div>
+
+    <h4>参考代码：</h4>
+<pre><span class="cp">#include &lt;algorithm&gt;</span>
+<span class="cp">#include &lt;cstdio&gt;</span>
+
+<span class="kw">using namespace</span> std;
+
+<span class="kw">int</span> days[<span class="num">20</span>] = {<span class="num">0</span>, <span class="num">31</span>, <span class="num">28</span>, <span class="num">31</span>, <span class="num">30</span>, <span class="num">31</span>, <span class="num">30</span>, <span class="num">31</span>, <span class="num">31</span>, <span class="num">30</span>, <span class="num">31</span>, <span class="num">30</span>, <span class="num">31</span>};
+
+<span class="kw">int</span> main() {
+    <span class="kw">int</span> m;
+    scanf(<span class="str">"%d"</span>, &amp;m);
+    printf(<span class="str">"MON TUE WED THU FRI SAT SUN\n"</span>);
+    <span class="kw">int</span> d = days[m];
+
+    <span class="kw">int</span> w = <span class="num">1</span>;  <span class="cmt">// 9月1日是周一</span>
+    <span class="kw">if</span> (m &gt; <span class="num">9</span>) {
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">9</span>; i &lt; m; i++)
+            w = (w + days[i] - <span class="num">1</span>) % <span class="num">7</span> + <span class="num">1</span>;
+    } <span class="kw">else if</span> (m &lt; <span class="num">9</span>) {
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">8</span>; i &gt;= m; i--)
+            w = ((w - days[i]) % <span class="num">7</span> + <span class="num">7</span>) % <span class="num">7</span>;
+        <span class="kw">if</span> (w == <span class="num">0</span>) w = <span class="num">7</span>;
+    }
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt; w; i++) printf(<span class="str">"   "</span>);  <span class="cmt">// 月初前的空格</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= d; i++) {
+        printf(<span class="str">"% 3d"</span>, i);                    <span class="cmt">// 日期占3位右对齐</span>
+        w = w % <span class="num">7</span> + <span class="num">1</span>;
+        <span class="kw">if</span> (w == <span class="num">1</span> || i == d)
+            printf(<span class="str">"\n"</span>);                    <span class="cmt">// 周日或最后一天换行</span>
+        <span class="kw">else</span>
+            printf(<span class="str">" "</span>);                     <span class="cmt">// 日期之间用空格隔开</span>
+    }
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+    <div class="key-point">
+      <span class="tag concept">格式化技巧</span>
+      <code>printf("%3d", i)</code> 中的 <code>%3d</code> 保证每个数字占3个字符宽度（右对齐），正好与星期缩写（3字母）对齐。
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>CCF GESP C++ 三级 2025年09月真题讲解 · 适用于小学生家长辅导</p>
+  <p>⚠ 判断题答案为基于C++知识判断得出，PDF中答案因特殊符号无法提取，如与官方有出入请以官方为准</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCF GESP C++ 四级 2025年03月 真题讲解</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #d97706;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 20px;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    border-radius: 16px;
+    margin-bottom: 32px;
+  }
+  header h1 { font-size: 2em; margin-bottom: 8px; }
+  header p { opacity: 0.9; font-size: 1.1em; }
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 28px;
+    margin-bottom: 32px;
+  }
+  .toc h3 { margin-bottom: 12px; color: var(--primary); }
+  .toc ul { list-style: none; padding: 0; }
+  .toc li { padding: 6px 0; }
+  .toc a { color: var(--primary); text-decoration: none; font-weight: 500; }
+  .toc a:hover { text-decoration: underline; }
+  .section-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 40px 0 20px;
+    padding: 12px 20px;
+    background: var(--primary);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .badge {
+    background: rgba(255,255,255,0.25);
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 400;
+  }
+  .answer-key {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .answer-key table { width: 100%; border-collapse: collapse; text-align: center; }
+  .answer-key th, .answer-key td {
+    padding: 8px 6px;
+    border: 1px solid var(--border);
+    font-size: 0.95em;
+  }
+  .answer-key th { background: #f1f5f9; font-weight: 600; }
+  .answer-key .ans { font-weight: 700; color: var(--primary); font-size: 1.1em; }
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .question-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .question-header {
+    background: #f1f5f9;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .question-num {
+    background: var(--primary);
+    color: white;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+  .question-type {
+    flex: 1;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.9em;
+  }
+  .answer-badge {
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9em;
+  }
+  .answer-badge.correct { background: #dcfce7; color: var(--success); }
+  .answer-badge.wrong { background: #fee2e2; color: var(--danger); }
+  .question-body { padding: 20px; }
+  .question-body pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: "Fira Code", "Consolas", monospace;
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin: 12px 0;
+  }
+  .options { margin: 12px 0; }
+  .options div {
+    padding: 8px 14px;
+    border-radius: 8px;
+    margin: 4px 0;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+  }
+  .options div.highlight {
+    background: #dcfce7;
+    border-color: var(--success);
+    font-weight: 600;
+  }
+  .explanation {
+    margin-top: 16px;
+    padding: 16px;
+    background: #fffbeb;
+    border-radius: 10px;
+    border: 1px solid #fde68a;
+  }
+  .explanation h4 { color: var(--warning); margin-bottom: 8px; }
+  .explanation ul, .explanation ol { padding-left: 20px; }
+  .explanation li { margin: 4px 0; }
+  .key-point {
+    background: #fef9c3;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 12px;
+    font-weight: 500;
+  }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-right: 8px;
+  }
+  .tag.concept { background: #dbeafe; color: #1e40af; }
+  .tag.formula { background: #dcfce7; color: #166534; }
+  .tag.calc { background: #fce7f3; color: #9d174d; }
+  pre .kw { color: #93c5fd; }
+  pre .str { color: #86efac; }
+  pre .cp { color: #c084fc; }
+  pre .cmt { color: #94a3b8; font-style: italic; }
+  pre .err { color: #fca5a5; }
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-size: 0.85em;
+  }
+  table { border-collapse: collapse; }
+  @media (max-width: 640px) {
+    body { padding: 10px; }
+    header { padding: 24px 16px; }
+    header h1 { font-size: 1.4em; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>CCF GESP 认证 C++ 四级</h1>
+  <p>2025年03月 · 真题详解</p>
+  <p style="font-size:0.9em;margin-top:8px;">适合小学生理解的详细解题过程</p>
+</header>
+
+<!-- ==================== 目录 ==================== -->
+<div class="toc">
+  <h3>📋 目录</h3>
+  <ul>
+    <li><a href="#s1">一、单选题（15题，每题2分，共30分）</a></li>
+    <li><a href="#s2">二、判断题（10题，每题2分，共20分）</a></li>
+    <li><a href="#s3">三、编程题（2题，每题25分，共50分）</a></li>
+  </ul>
+</div>
+
+<!-- ==================== 第一部分：单选题 ==================== -->
+<h2 class="section-title" id="s1">一、单选题 <span class="badge">15题 × 2分 = 30分</span></h2>
+
+<div class="answer-key">
+  <table>
+    <tr><th>题号</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr>
+    <tr><th>答案</th>
+      <td class="ans">A</td><td class="ans">B</td><td class="ans">B</td><td class="ans">D</td>
+      <td class="ans">D</td><td class="ans">C</td><td class="ans">D</td><td class="ans">D</td>
+      <td class="ans">B</td><td class="ans">B</td><td class="ans">B</td><td class="ans">B</td>
+      <td class="ans">A</td><td class="ans">A</td><td class="ans">C</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Q1 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">1</div>
+    <div class="question-type">单选题 · 函数声明与定义</div>
+    <div class="answer-badge correct">答案：A</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>关于下述代码，说法错误的是（ ）。</p>
+<pre><span class="kw">int</span> multiply(<span class="kw">int</span> x, <span class="kw">int</span> y);
+
+<span class="kw">int</span> main() {
+    <span class="kw">int</span> a = 4;
+    <span class="kw">int</span> b = 5;
+    <span class="kw">int</span> result = multiply(a, b);
+    std::cout &lt;&lt; <span class="str">"The result is: "</span> &lt;&lt; result &lt;&lt; std::endl;
+    <span class="kw">return</span> 0;
+}
+
+<span class="kw">int</span> multiply(<span class="kw">int</span> x, <span class="kw">int</span> y) {
+    <span class="kw">return</span> x * y;
+}</pre>
+    <div class="options">
+      <div class="highlight">A. 函数 multiply 的定义应该放到函数 main 之前。 ✓</div>
+      <div>B. 函数声明 int multiply(int x, int y); 中明确指定了函数 multiply() 的返回值为整数类型。</div>
+      <div>C. 在 main 函数中，函数 multiply 通过 multiply(a, b) 被调用，其中 a 和 b 是定义在 main 函数中的变量，它们作为实参传递给了 multiply 函数的形参 x 和 y。</div>
+      <div>D. 运行上述代码，将输出 The result is: 20。</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>关键概念：函数声明 vs 函数定义</strong></li>
+        <li>第1行 <code>int multiply(int x, int y);</code> 是<strong>函数声明</strong>（也叫函数原型），告诉编译器"存在这样一个函数"。</li>
+        <li>第11-13行是<strong>函数定义</strong>（真正实现函数功能的代码）。</li>
+        <li>有了函数声明在前，函数定义可以放在 main 之后，编译器在编译 main 时已经知道 multiply 的"样子"了。</li>
+        <li><strong>A 是错误的</strong>：因为有函数声明，定义不需要放在 main 前面。</li>
+        <li>B 正确：声明中 <code>int multiply(...)</code> 明确了返回类型为 int。</li>
+        <li>C 正确：a 和 b 是实参，x 和 y 是形参。</li>
+        <li>D 正确：4 × 5 = 20，输出 The result is: 20。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">核心知识点</span>
+        <strong>函数声明</strong>（函数原型）让编译器预先知道函数的信息，定义可以放在调用之后。如果只有定义没有声明，且定义在调用之后，才会报错。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">2</div>
+    <div class="question-type">单选题 · 变量作用域</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>执行下述代码将输出（ ）。</p>
+<pre><span class="kw">int</span> x = 10;
+<span class="kw">void</span> func() { <span class="kw">int</span> x = 20; std::cout &lt;&lt; x; }
+<span class="kw">int</span> main() {
+    func();
+    std::cout &lt;&lt; x;
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="options">
+      <div>A. 2020</div>
+      <div class="highlight">B. 2010 ✓</div>
+      <div>C. 1010</div>
+      <div>D. 编译错误</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>第1行：<strong>全局变量</strong> <code>x = 10</code>，在整个程序中可见。</li>
+        <li>第2行：func() 中定义了<strong>局部变量</strong> <code>x = 20</code>，这个 x <strong>屏蔽</strong>了全局变量 x。</li>
+        <li>调用 <code>func()</code>：输出局部变量 x → 输出 <strong>20</strong>。</li>
+        <li>回到 main：<code>std::cout &lt;&lt; x</code> 中的 x 是全局变量 x → 输出 <strong>10</strong>。</li>
+        <li>合起来：<strong>2010</strong></li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">局部优先原则</span>
+        当局部变量和全局变量<strong>同名</strong>时，函数内部优先使用<strong>局部变量</strong>。这叫做"名称遮蔽"（Name Hiding）。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">3</div>
+    <div class="question-type">单选题 · 指针基础</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>执行下述代码后，变量 a 的值为（ ）。</p>
+<pre><span class="kw">int</span> a = 10;
+<span class="kw">int</span>* p = &amp;a;
+*p = 20;</pre>
+    <div class="options">
+      <div>A. 10</div>
+      <div class="highlight">B. 20 ✓</div>
+      <div>C. 随机值</div>
+      <div>D. 编译错误</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><code>int* p = &amp;a;</code> → p 是一个指针，存储了变量 a 的<strong>内存地址</strong>。</li>
+        <li><code>*p = 20;</code> → <strong>解引用</strong>操作，意思是"通过 p 中存储的地址，找到那个变量，把它的值改成 20"。</li>
+        <li>因为 p 指向 a，所以 <code>*p = 20</code> 等价于 <code>a = 20</code>。</li>
+        <li>最终 a 的值变为 <strong>20</strong>。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">指针三要素</span>
+        <code>&amp;a</code> 取地址 → 得到 a 的地址 &nbsp;|&nbsp; <code>int* p</code> 声明指针 &nbsp;|&nbsp; <code>*p</code> 解引用 → 访问指针指向的变量
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">4</div>
+    <div class="question-type">单选题 · 参数传递</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>以下哪种参数传递方式可以避免拷贝大型对象？</p>
+    <div class="options">
+      <div>A. 只能用值传递</div>
+      <div>B. 只能用引用传递</div>
+      <div>C. 只能用指针传递</div>
+      <div class="highlight">D. 引用传递和指针传递均可 ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>值传递</strong>：会把整个对象<strong>复制一份</strong>给函数。如果对象很大（比如一个包含10000个元素的数组结构体），复制非常耗时。</li>
+        <li><strong>引用传递</strong>：只传递对象的"别名"，不复制对象本身。函数操作的就是原对象。</li>
+        <li><strong>指针传递</strong>：只传递对象的地址（通常4或8字节），也不复制对象本身。</li>
+        <li>所以引用传递和指针传递<strong>都可以</strong>避免拷贝大型对象。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">三种传递方式对比</span>
+        <strong>值传递</strong>：复制整个对象（慢，但安全）<br>
+        <strong>引用传递</strong>：传递别名（快，可修改原对象）<br>
+        <strong>指针传递</strong>：传递地址（快，可修改原对象）
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">5</div>
+    <div class="question-type">单选题 · 引用传递与值传递</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>执行下述代码，将输出（ ）。</p>
+<pre><span class="kw">void</span> swap(<span class="kw">int</span> a, <span class="kw">int</span> &amp;b) {
+    <span class="kw">int</span> temp = a;
+    a = b;
+    b = temp;
+}
+<span class="kw">int</span> main() {
+    <span class="kw">int</span> x = 1, y = 2;
+    swap(x, y);
+    std::cout &lt;&lt; x &lt;&lt; y;
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="options">
+      <div>A. 12</div>
+      <div>B. 21</div>
+      <div>C. 22</div>
+      <div class="highlight">D. 11 ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>关键：</strong>参数 a 是<strong>值传递</strong>，参数 b 是<strong>引用传递</strong>（注意 <code>int &amp;b</code> 中的 &amp;）。</li>
+        <li>调用 swap(x, y)：
+          <ul>
+            <li>a 获得了 x 的<strong>副本</strong>（a = 1），对 a 的修改不影响 x。</li>
+            <li>b 是 y 的<strong>引用</strong>，b 就是 y 的别名，修改 b 就是修改 y。</li>
+          </ul>
+        </li>
+        <li>执行过程：
+          <ul>
+            <li>temp = a → temp = 1</li>
+            <li>a = b → a = 2（但 x 不变！）</li>
+            <li>b = temp → b = 1 → y = 1（y 被修改了！）</li>
+          </ul>
+        </li>
+        <li>结果：x = 1（未变），y = 1（被改了），输出 <strong>11</strong>。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">易混淆点</span>
+        这个 swap 函数<strong>不能正确交换</strong> x 和 y！因为 a 是值传递，对 a 的修改不会影响 x。只有 b 是引用传递，把 y 改成了 1。所以 x=1, y=1。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">6</div>
+    <div class="question-type">单选题 · 结构体初始化</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>下面的描述中，（ ）正确定义一个名为 Person 的结构体并正确初始化了一个 Person 结构体的变量 p。</p>
+    <div class="options">
+      <div>A. <code>Person p("Yang", 10);</code> — 没有定义构造函数，不能这样初始化</div>
+      <div>B. <code>string name,</code> — 成员声明用了逗号，语法错误</div>
+      <div class="highlight">C. <code>Person p = { "Yang", 10 };</code> — 正确的聚合初始化 ✓</div>
+      <div>D. <code>Person p = new Person("Yang", 10);</code> — new 返回指针，类型不匹配</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>A 错误：</strong>结构体没有定义带参数的构造函数，不能使用 <code>Person p("Yang", 10);</code> 这种写法。</li>
+        <li><strong>B 错误：</strong>成员声明用逗号分隔是错误的，应该用分号：<code>string name, int age;</code> 不对，应该是 <code>string name; int age;</code>。而且 C++ 中 struct 成员默认 public，但逗号语法仍不正确。</li>
+        <li><strong>C 正确：</strong>这是<strong>聚合初始化</strong>（aggregate initialization），用花括号按顺序给成员赋值：name = "Yang", age = 10。</li>
+        <li><strong>D 错误：</strong><code>new</code> 返回的是<strong>指针</strong>（Person*），不能赋值给 Person 类型的变量 p。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">结构体初始化方式</span>
+        聚合初始化：<code>Person p = {"Yang", 10};</code> 或 <code>Person p{"Yang", 10};</code><br>
+        逐成员赋值：<code>Person p; p.name = "Yang"; p.age = 10;</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">7</div>
+    <div class="question-type">单选题 · 结构体嵌套</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>给定如下代码，下面描述错误的是（ ）。</p>
+<pre><span class="kw">struct</span> Person {
+    std::string name;
+    <span class="kw">int</span> age;
+    <span class="kw">struct</span> Address {
+        std::string street;
+        std::string city;
+    };
+    Address address;
+};</pre>
+    <div class="options">
+      <div>A. 结构 Person 内嵌套结构 Address</div>
+      <div>B. Person 有一个 Address 类型的 address 成员</div>
+      <div>C. 一个 Person 类型的变量 p 的 address 的初始化可以写成：p.address.street = "123 Main St"; p.address.city = "Anytown";</div>
+      <div class="highlight">D. 结构的嵌套可以减少命名冲突，因此可以不必控制嵌套层次 ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>A 正确：结构 Person 内部定义了结构 Address，这就是<strong>嵌套结构</strong>。</li>
+        <li>B 正确：成员 <code>Address address;</code> 使用了嵌套定义的 Address 类型。</li>
+        <li>C 正确：通过 <code>.</code> 运算符逐层访问：p.address.street。</li>
+        <li><strong>D 错误：</strong>虽然嵌套确实可以减少命名冲突（Address 在 Person 内部，不会和外面的 Address 冲突），但<strong>不能无限制嵌套</strong>。过度嵌套会使代码难以理解和维护，应该合理控制层次。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">嵌套结构的原则</span>
+        嵌套结构可以表达"从属关系"，但<strong>过度嵌套会让代码变得复杂</strong>。一般嵌套1-2层比较合适，不宜超过3层。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">8</div>
+    <div class="question-type">单选题 · 二维数组访问</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>假设 <code>int arr[2][3] = {{1,2,3},{4,5,6}};</code>，则 <code>arr[1][2]</code> 的值是（ ）。</p>
+    <div class="options">
+      <div>A. 2</div>
+      <div>B. 3</div>
+      <div>C. 5</div>
+      <div class="highlight">D. 6 ✓</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>二维数组 arr[2][3]：2行3列。</li>
+        <li>第0行：{1, 2, 3}，即 arr[0][0]=1, arr[0][1]=2, arr[0][2]=3</li>
+        <li>第1行：{4, 5, 6}，即 arr[1][0]=4, arr[1][1]=5, arr[1][2]=6</li>
+        <li><strong>arr[1][2] = 第1行、第2列 = 6</strong></li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">数组索引从0开始</span>
+        记牢：第一个下标是<strong>行号</strong>，第二个下标是<strong>列号</strong>，都从 0 开始。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">9</div>
+    <div class="question-type">单选题 · 二维数组定义</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>下面（ ）正确定义了二维数组。</p>
+    <div class="options">
+      <div>A. int arr[3,4];</div>
+      <div class="highlight">B. int arr[3][4]; ✓</div>
+      <div>C. int arr(3,4);</div>
+      <div>D. int a[3-4];</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>A 错误：</strong><code>[3,4]</code> 不是合法的 C++ 数组声明语法。逗号运算符在这里不起作用。</li>
+        <li><strong>B 正确：</strong><code>int arr[3][4];</code> 声明了一个3行4列的二维数组。</li>
+        <li><strong>C 错误：</strong>圆括号 <code>(3,4)</code> 不能用于数组维度声明。</li>
+        <li><strong>D 错误：</strong><code>3-4 = -1</code>，数组大小不能为负数，编译错误。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">二维数组语法</span>
+        正确格式：<code>类型 数组名[行数][列数];</code>，每个维度用单独的方括号。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">10</div>
+    <div class="question-type">单选题 · 递推算法/爬楼梯</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>小杨正在爬楼梯，需要爬 n 阶才能到达楼顶。如果每次可以爬 1 个或 2 个台阶，下面代码采用递推算法来计算一共有多少种不同的方法可以爬到楼顶，则横线上应填写（ ）。</p>
+<pre><span class="kw">int</span> f(<span class="kw">int</span> n) {
+    <span class="kw">if</span> (n == 1 || n == 2)
+        <span class="kw">return</span> n;
+
+    <span class="kw">int</span> f1 = 1;
+    <span class="kw">int</span> f2 = 2;
+    <span class="kw">int</span> res = 0;
+    <span class="kw">for</span> (<span class="kw">int</span> i = 3; i &lt;= n; i++) {
+        ________________________________   // 在此处填入代码
+    }
+    <span class="kw">return</span> res;
+}</pre>
+    <div class="options">
+      <div>A. res += f1 + f2; f1 = f2; f2 = res;</div>
+      <div class="highlight">B. res = f1 + f2; f1 = f2; f2 = res; ✓</div>
+      <div>C. res += f1 + f2; f2 = res; f1 = f2;</div>
+      <div>D. res = f1 + f2; f2 = res; f1 = f2;</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>这是经典的<strong>爬楼梯问题</strong>，递推公式：<strong>f(n) = f(n-1) + f(n-2)</strong></li>
+        <li>因为到达第 n 阶的方法 = 从 n-1 走1步上来 + 从 n-2 走2步上来。</li>
+        <li>变量含义：f1 = f(i-2), f2 = f(i-1), res = f(i)</li>
+        <li>每轮循环需要：
+          <ul>
+            <li><strong>res = f1 + f2</strong>（当前 = 前两个之和），注意是 <strong>=</strong> 不是 +=</li>
+            <li><strong>f1 = f2</strong>（f1 移动到 f2 的位置）</li>
+            <li><strong>f2 = res</strong>（f2 移动到新计算出的 res 的位置）</li>
+          </ul>
+        </li>
+        <li>A 用 <strong>res +=</strong>，会让结果累加，错了。</li>
+        <li>C 和 D 的更新顺序不对（先更新 f2 再更新 f1 会导致 f1 获得错误的值）。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag calc">递推过程示例 (n=5)</span>
+        f1=1, f2=2<br>
+        i=3: res=1+2=3, f1=2, f2=3<br>
+        i=4: res=2+3=5, f1=3, f2=5<br>
+        i=5: res=3+5=8, f1=5, f2=8 → 返回 8
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">11</div>
+    <div class="question-type">单选题 · 时间复杂度</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>给定如下算法，其时间复杂度为（ ）。</p>
+<pre><span class="kw">bool</span> f(<span class="kw">int</span> arr[], <span class="kw">int</span> n, <span class="kw">int</span> target) {
+    <span class="kw">for</span> (<span class="kw">int</span> i = 0; i &lt; (1 &lt;&lt; n); i++) {
+        <span class="kw">int</span> sum = 0;
+        <span class="kw">for</span> (<span class="kw">int</span> j = 0; j &lt; n; j++) {
+            <span class="kw">if</span> (i &amp; (1 &lt;&lt; j)) {
+                sum += arr[j];
+            }
+        }
+        <span class="kw">if</span> (sum == target) <span class="kw">return</span> <span class="kw">true</span>;
+    }
+    <span class="kw">return</span> <span class="kw">false</span>;
+}</pre>
+    <div class="options">
+      <div>A. O(n)</div>
+      <div class="highlight">B. O(n × 2ⁿ) ✓</div>
+      <div>C. O(n²)</div>
+      <div>D. O(2ⁿ)</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>外层循环：<code>for (int i = 0; i &lt; (1 &lt;&lt; n); i++)</code></li>
+        <li><code>1 &lt;&lt; n</code> = 2ⁿ，所以外层循环执行 <strong>2ⁿ 次</strong>。</li>
+        <li>内层循环：<code>for (int j = 0; j &lt; n; j++)</code> → 执行 <strong>n 次</strong>。</li>
+        <li>总执行次数 ≈ <strong>2ⁿ × n = n × 2ⁿ</strong></li>
+        <li>时间复杂度为 <strong>O(n × 2ⁿ)</strong>。</li>
+        <li>这个算法其实是用<strong>枚举子集</strong>的方式（通过位运算 i 的每一位来表示是否选 arr[j]），来查找是否有一个子集的和等于 target。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">时间复杂度计算</span>
+        外层 × 内层 = 2ⁿ × n。注意 <strong>O(2ⁿ)</strong> 和 <strong>O(n×2ⁿ)</strong> 是不同的，这里内层不是常数，所以是 n×2ⁿ。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">12</div>
+    <div class="question-type">单选题 · 排序稳定性</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>下面关于排序稳定性的描述，正确的是（ ）。</p>
+    <div class="options">
+      <div>A. 稳定性指算法的时间复杂度恒定</div>
+      <div class="highlight">B. 稳定排序保证相同元素的相对顺序不变 ✓</div>
+      <div>C. 选择排序是稳定排序</div>
+      <div>D. 插入排序不是稳定排序</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>A 错误：</strong>稳定性和时间复杂度是两个不同的概念。时间复杂度指运行时间随数据量的增长速度。</li>
+        <li><strong>B 正确：</strong>稳定排序的定义就是：如果两个元素的值相等，排序后它们的<strong>先后顺序保持不变</strong>。</li>
+        <li><strong>C 错误：</strong>选择排序<strong>不是</strong>稳定排序。例如 [5, 5, 2]，第一轮会把第一个5和2交换，两个5的相对顺序就变了。</li>
+        <li><strong>D 错误：</strong>插入排序<strong>是</strong>稳定排序。插入时遇到相等的元素会放在后面，保持原有顺序。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">常见排序稳定性速记</span>
+        <strong>稳定</strong>：冒泡、插入、归并 &nbsp;|&nbsp; <strong>不稳定</strong>：选择、快速、堆排序
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">13</div>
+    <div class="question-type">单选题 · 冒泡排序</div>
+    <div class="answer-badge correct">答案：A</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>对数组 arr[]={5, 3, 8, 1} 进行升序排序，执行第一轮冒泡排序后数组 arr 中的内容为（ ）。</p>
+    <div class="options">
+      <div class="highlight">A. 3, 5, 1, 8 ✓</div>
+      <div>B. 3, 1, 5, 8</div>
+      <div>C. 3, 5, 8, 1</div>
+      <div>D. 5, 3, 8, 1</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>冒泡排序第一轮：从前往后两两比较，把<strong>最大的数"冒"到最后</strong>。</li>
+        <li>初始：[5, 3, 8, 1]</li>
+        <li>比较 5 和 3：5>3，交换 → [<strong>3, 5</strong>, 8, 1]</li>
+        <li>比较 5 和 8：5&lt;8，不交换 → [3, 5, 8, 1]</li>
+        <li>比较 8 和 1：8>1，交换 → [3, 5, <strong>1, 8</strong>]</li>
+        <li>第一轮结束，最大值 8 已到达最后位置。</li>
+        <li>结果：<strong>{3, 5, 1, 8}</strong></li>
+      </ul>
+      <div class="key-point">
+        <span class="tag calc">冒泡排序口诀</span>
+        每轮把<strong>当前未排序部分的最大值</strong>像气泡一样"浮"到最后面。第1轮确定最后一个，第2轮确定倒数第二个……
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">14</div>
+    <div class="question-type">单选题 · 异常处理</div>
+    <div class="answer-badge correct">答案：A</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>运行下面的代码，将出现（ ）。</p>
+<pre><span class="kw">double</span> hmean(<span class="kw">double</span> a, <span class="kw">double</span> b) {
+    <span class="kw">if</span> (a == -b)
+        <span class="kw">throw</span> runtime_error(<span class="str">"Runtime error occurred."</span>);
+    <span class="kw">return</span> 2.0*a*b/(a + b);
+}
+
+<span class="kw">int</span> main() {
+    <span class="kw">double</span> x = 10;
+    <span class="kw">double</span> y = -10;
+
+    <span class="kw">try</span> {
+        <span class="kw">int</span> result = hmean(x, y);
+        cout &lt;&lt; <span class="str">"hmean: "</span> &lt;&lt; result &lt;&lt; endl;
+    }
+    <span class="kw">catch</span> (<span class="kw">const</span> runtime_error&amp; e) {
+        cout &lt;&lt; <span class="str">"Caught: "</span> &lt;&lt; e.what() &lt;&lt; endl;
+    } <span class="kw">catch</span> (...) {
+        cout &lt;&lt; <span class="str">"Caught an unknown exception."</span> &lt;&lt; endl;
+    }
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="options">
+      <div class="highlight">A. 屏幕上输出 Caught: Runtime error occurred. ✓</div>
+      <div>B. 屏幕上输出 Caught an unknown exception.</div>
+      <div>C. 程序调用 std::terminate()</div>
+      <div>D. 编译错误</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li>x = 10, y = -10，满足 <code>a == -b</code>（即 10 == -(-10) = 10）。</li>
+        <li>所以 hmean 函数会 <strong>throw</strong> 一个 runtime_error 异常。</li>
+        <li>main 中用 <code>try-catch</code> 捕获异常：
+          <ul>
+            <li>第一个 catch 匹配 <code>const runtime_error&amp;</code>，成功捕获。</li>
+            <li>输出 "Caught: " + 异常信息。</li>
+          </ul>
+        </li>
+        <li>注意 <code>int result = hmean(x, y);</code> 中，虽然 hmean 返回 double，但这里用 int 接收——这只是一个隐式类型转换，不影响异常处理。</li>
+        <li>另外 <strong>拼写错误</strong>：代码中写的是 <code>runtime_error</code>（少了个 e），但题目选项中给出的就是原样，这说明这不是考察重点（或者代码能通过编译，runtime_error 的拼写取决于具体命名空间）。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">异常处理流程</span>
+        throw 抛出异常 → try 块中代码停止执行 → 跳到匹配的 catch 块 → 处理完后继续执行 catch 后面的代码。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">15</div>
+    <div class="question-type">单选题 · 输出重定向</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>下面哪种方式不能实现将字符串 "Happy Spring!" 输出重定向到文件 log.txt（ ）。</p>
+    <div class="options">
+      <div>A. freopen + cout</div>
+      <div>B. ofstream 直接写入</div>
+      <div class="highlight">C. ofstream 创建了但用 cout 输出 ✓</div>
+      <div>D. rdbuf 重定向 cout 缓冲区</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解题过程</h4>
+      <ul>
+        <li><strong>A 可以：</strong><code>freopen("log.txt", "w", stdout);</code> 把标准输出重定向到文件，之后 cout 就输出到文件了。</li>
+        <li><strong>B 可以：</strong><code>ofstream outFile("log.txt"); outFile &lt;&lt; ...;</code> 直接用文件输出流写入。</li>
+        <li><strong>C 不可以：</strong>虽然创建了 ofstream 对象 outFile，但后面用的是 <code>cout</code>（屏幕输出），不是 outFile，所以字符串没有被重定向到文件。</li>
+        <li><strong>D 可以：</strong><code>cout.rdbuf(log_file.rdbuf());</code> 把 cout 的底层缓冲区替换为文件的缓冲区，之后 cout 就输出到文件了。</li>
+      </ul>
+      <div class="key-point">
+        <span class="tag concept">输出重定向三种方法</span>
+        ① freopen 重定向 stdout &nbsp;|&nbsp; ② 直接用 ofstream &nbsp;|&nbsp; ③ rdbuf() 替换 cout 的缓冲区
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第二部分：判断题 ==================== -->
+<h2 class="section-title" id="s2">二、判断题 <span class="badge">10题 × 2分 = 20分</span></h2>
+
+<div class="answer-key">
+  <table>
+    <tr><th>题号</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+    <tr><th>答案</th>
+      <td class="ans">✓</td><td class="ans">✗</td><td class="ans">✓</td><td class="ans">✗</td>
+      <td class="ans">✗</td><td class="ans">✓</td><td class="ans">✓</td><td class="ans">✓</td>
+      <td class="ans">✓</td><td class="ans">✓</td>
+    </tr>
+  </table>
+</div>
+
+<!-- T1 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">1</div>
+    <div class="question-type">判断题 · 函数概念</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>函数是C++中的核心概念，用于封装可重用的代码块。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>函数（function）是 C++ 中最基本的代码组织单元。它把一段完成特定任务的代码"打包"在一起，起一个名字，之后可以反复调用。这就是"封装可重用的代码块"的含义。</p>
+    </div>
+  </div>
+</div>
+
+<!-- T2 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">2</div>
+    <div class="question-type">判断题 · 函数返回类型</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>在C++中，函数的返回类型可以省略，默认为 int。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>错误。</strong>在<strong>C语言</strong>中，如果省略返回类型，默认是 int。但在<strong>C++</strong>中，这是不允许的——所有函数必须明确声明返回类型，否则会编译报错。这是 C 和 C++ 的一个重要区别。</p>
+      <div class="key-point">
+        <span class="tag concept">C vs C++</span>
+        C语言允许省略（默认int），<strong>C++不允许省略返回类型</strong>。这是C++比C更严格的地方之一。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T3 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">3</div>
+    <div class="question-type">判断题 · 结构体访问权限</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>结构体的成员默认是 public 访问权限。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>在 C++ 中，<strong>struct</strong> 的成员默认是 <strong>public</strong>（公开的，外部可以直接访问）。这是 struct 和 class 的<strong>唯一区别</strong>——class 的成员默认是 private（私有的）。</p>
+      <div class="key-point">
+        <span class="tag concept">struct vs class</span>
+        <strong>struct</strong>：默认 public &nbsp;|&nbsp; <strong>class</strong>：默认 private<br>
+        除此之外，两者在 C++ 中几乎完全相同。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T4 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">4</div>
+    <div class="question-type">判断题 · 指针运算</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>假设整数数组 arr[4]= {0, 1, 2, 3}; 的第一个元素在内存中的地址为 0x7ffee4065820，经过 int* p = arr; p += 1; 后，指针 p 的值是1。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>错误。</strong>指针的加法不是加数值，而是加<strong>类型大小</strong>。<code>p += 1</code> 会使 p 指向<strong>下一个 int 元素</strong>。因为 int 占 4 字节，p 的值会变为 <strong>0x7ffee4065824</strong>（地址值 + 4），而不是 1。</p>
+      <div class="key-point">
+        <span class="tag concept">指针算术</span>
+        <code>p + n</code> = p 的地址值 + n × sizeof(元素类型)。int* 加1，地址值加4；char* 加1，地址值加1。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T5 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">5</div>
+    <div class="question-type">判断题 · 二维数组参数</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>二维数组作为函数参数时，必须显式指定所有维度的大小。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>错误。</strong>二维数组作为函数参数时，<strong>第一维的大小可以省略</strong>，但<strong>第二维（及以后各维）必须指定</strong>。例如 <code>void func(int arr[][4])</code> 是合法的（省略了行数），而 <code>void func(int arr[][])</code> 是不合法的。</p>
+      <div class="key-point">
+        <span class="tag concept">记住口诀</span>
+        多维数组作参数：<strong>只有第一维可以省略</strong>，其余维度必须写明。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- T6 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">6</div>
+    <div class="question-type">判断题 · 递推概念</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>递推是一种通过已知的初始值和递推公式，逐步求解目标值的算法。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>这是递推（iteration/递推法）的准确定义。例如斐波那契数列：已知 f(1)=1, f(2)=1，递推公式 f(n)=f(n-1)+f(n-2)，就可以逐步算出任意 f(n)。递推的核心是<strong>从已知出发，一步一步推导出未知</strong>。</p>
+    </div>
+  </div>
+</div>
+
+<!-- T7 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">7</div>
+    <div class="question-type">判断题 · 冒泡排序复杂度</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>考虑最坏情况下冒泡排序算法的时间复杂度，n 为待排序数字的数目，则其递推关系式为 T(n) = T(n-1) + n，T(1) = 0。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>冒泡排序最坏情况（完全逆序）：第1轮比较 n-1 次，第2轮比较 n-2 次……总共比较 (n-1)+(n-2)+…+1 = n(n-1)/2 次，时间复杂度<strong>O(n²)</strong>。递推关系 T(n) = T(n-1) + n 展开后正是这个和式。</p>
+    </div>
+  </div>
+</div>
+
+<!-- T8 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">8</div>
+    <div class="question-type">判断题 · 插入排序最好情况</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>插入排序在最好情况（已有序）下的时间复杂度是 O(n)。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>当数组已经有序时，插入排序每次只需要比较一次就能确定位置，不需要移动元素。总共 n-1 次比较，时间复杂度为 <strong>O(n)</strong>。这也是插入排序相比选择排序的一个优势。</p>
+    </div>
+  </div>
+</div>
+
+<!-- T9 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">9</div>
+    <div class="question-type">判断题 · 选择排序</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>对数组 arr[]={4, 3, 1, 5, 2} 进行升序排序，执行第一轮选择排序后数组 arr 中的内容是 {1, 4, 3, 5, 2}。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>选择排序第一轮：遍历整个数组找到最小值（1，在索引2），将它与第一个元素（4，索引0）交换位置。交换后：{<strong>1</strong>, 3, <strong>4</strong>, 5, 2} → {1, 4, 3, 5, 2}（等一下，换回来：把索引2的1和索引0的4交换，4到了索引2的位置）。结果确实是 {1, 4, 3, 5, 2}。</p>
+    </div>
+  </div>
+</div>
+
+<!-- T10 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">10</div>
+    <div class="question-type">判断题 · 未捕获异常</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目：</strong>未捕获异常会调用 std::terminate 终止程序。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>正确。</strong>在 C++ 中，如果异常被抛出（throw）但没有被任何 catch 捕获，程序会调用 <strong>std::terminate()</strong> 来终止运行。默认情况下，terminate() 会调用 abort()，导致程序异常退出。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第三部分：编程题 ==================== -->
+<h2 class="section-title" id="s3">三、编程题 <span class="badge">2题 × 25分 = 50分</span></h2>
+
+<!-- P1 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">P1</div>
+    <div class="question-type">编程题 · 二维网格</div>
+    <div class="answer-badge correct">25分</div>
+  </div>
+  <div class="question-body">
+    <h3>题目：荒地开垦</h3>
+    <p><strong>题目描述：</strong>小杨有一大片荒地，可以表示为一个 n 行 m 列的网格图。小杨想要开垦这块荒地，但荒地中一些位置存在杂物，对于一块不存在杂物的荒地，该荒地可以开垦当且仅当其上下左右四个方向相邻的格子均不存在杂物。小杨可以选择<strong>至多一个位置</strong>，清除该位置的杂物，移除杂物后该位置变为荒地。小杨想知道在清除至多一个位置的杂物的情况下，<strong>最多能够开垦多少块荒地</strong>。</p>
+
+    <p><strong>输入格式：</strong></p>
+    <ul>
+      <li>第一行包含两个正整数 n, m。</li>
+      <li>之后 n 行，每行包含一个长度为 m 且仅包含字符 <code>.</code> 和 <code>#</code> 的字符串。如果为 <code>.</code>，代表该位置为荒地，如果为 <code>#</code>，代表该位置为杂物。</li>
+    </ul>
+
+    <p><strong>输出格式：</strong>输出一个整数，代表在清除至多一个位置的杂物的情况下，最多能够开垦的荒地块数。</p>
+
+    <p><strong>输入样例：</strong></p>
+<pre>3 5
+.....
+.#..#
+.....</pre>
+    <p><strong>输出样例：</strong>11</p>
+
+    <div class="explanation">
+      <h4>📝 详细解析</h4>
+      <p><strong>核心思路：</strong></p>
+      <ol>
+        <li><strong>判定可开垦条件：</strong>一块荒地（<code>.</code>）可以开垦，当且仅当它的上下左右四个邻居都不是杂物（<code>#</code>）。</li>
+        <li><strong>允许清除一个杂物：</strong>我们可以选择一个杂物格子清除（变成<code>.</code>），这可能会让原来不能开垦的相邻荒地变得可以开垦。</li>
+        <li><strong>算法步骤：</strong>
+          <ul>
+            <li>先统计<strong>不需要清除就能开垦</strong>的荒地数量（ans）。</li>
+            <li>对于每个荒地格子，统计它周围有几个杂物：如果周围有<strong>恰好1个</strong>杂物，说明清除那个杂物后该荒地就能开垦了，给那个杂物位置 +1 贡献。</li>
+            <li>对于每个杂物格子，如果它周围没有杂物（全是荒地），清除它自身后自己也能变成可开垦的荒地，给自己 +1。</li>
+            <li>最后取所有位置贡献值的最大值 mx，答案 = ans + mx。</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p><strong>样例执行过程：</strong></p>
+      <pre>原始网格：
+.....
+.#..#
+.....</pre>
+      <p>移除第二行第二个 <code>#</code>（即 (2,2) 位置）后：</p>
+      <pre>.....
+....#
+.....</pre>
+      <p>第一行5块 + 第二行前4块 + 第三行前2块（等等，实际计算需要遍历每个格子检查四邻）。清除 (2,2) 的杂物后，原本被这个杂物"挡住"的荒地都变得可以开垦了，总共 11 块。</p>
+
+      <p><strong>时间复杂度：</strong>O(n×m)，需要遍历每个格子和它的4个邻居。</p>
+    </div>
+
+    <h4>参考代码：</h4>
+<pre><span class="cp">#include &lt;bits/stdc++.h&gt;</span>
+<span class="kw">using namespace</span> std;
+<span class="kw">const</span> <span class="kw">int</span> N = 1005;
+<span class="kw">char</span> mat[N][N];
+<span class="kw">int</span> a[N][N];
+<span class="kw">const</span> <span class="kw">int</span> d[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+<span class="kw">int</span> main() {
+    <span class="kw">int</span> n, m, ans = 0;
+    scanf(<span class="str">"%d%d"</span>, &amp;n, &amp;m);
+    <span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt;= n; i++)
+        scanf(<span class="str">"%s"</span>, mat[i] + 1);
+    <span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt;= n; i++)
+        <span class="kw">for</span> (<span class="kw">int</span> j = 1; j &lt;= m; j++) {
+            <span class="kw">int</span> num = 0, p = -1;
+            <span class="kw">for</span> (<span class="kw">int</span> k = 0; k &lt; 4; k++)
+                <span class="kw">if</span> (mat[i + d[k][0]][j + d[k][1]] == <span class="str">'#'</span>)
+                    num++, p = k;
+            <span class="kw">if</span> (mat[i][j] == <span class="str">'.'</span> &amp;&amp; num == 1)
+                a[i + d[p][0]][j + d[p][1]]++;
+            <span class="kw">else if</span> (mat[i][j] == <span class="str">'.'</span> &amp;&amp; num == 0)
+                ans++;
+            <span class="kw">else if</span> (mat[i][j] == <span class="str">'#'</span> &amp;&amp; num == 0)
+                a[i][j]++;
+        }
+    <span class="kw">int</span> mx = 0;
+    <span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt;= n; i++)
+        <span class="kw">for</span> (<span class="kw">int</span> j = 1; j &lt;= m; j++)
+            mx = max(mx, a[i][j]);
+    cout &lt;&lt; ans + mx &lt;&lt; endl;
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="key-point">
+      <span class="tag concept">核心知识点</span>
+      <strong>方向数组</strong> d[4][2] 枚举四个方向 &nbsp;|&nbsp; <strong>贡献统计</strong> a[N][N] 记录清除每个杂物能获得的收益 &nbsp;|&nbsp; <strong>边界处理</strong> mat 数组从1开始，外围自动为0
+    </div>
+  </div>
+</div>
+
+<!-- P2 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">P2</div>
+    <div class="question-type">编程题 · 二阶矩阵</div>
+    <div class="answer-badge correct">25分</div>
+  </div>
+  <div class="question-body">
+    <h3>题目：二阶矩阵</h3>
+    <p><strong>题目描述：</strong>小 A 有一个 n 行 m 列的矩阵 A。小 A 认为一个 2×2 的矩阵 B 是<strong>好的</strong>，当且仅当 B[0][0] × B[1][1] == B[0][1] × B[1][0]。小 A 想知道 A 中有多少个好的子矩阵。</p>
+
+    <p><strong>输入格式：</strong></p>
+    <ul>
+      <li>第一行，两个正整数 n, m。</li>
+      <li>接下来 n 行，每行 m 个整数。</li>
+    </ul>
+
+    <p><strong>输出格式：</strong>一行，一个整数，表示 A 中好的子矩阵的数量。</p>
+
+    <p><strong>输入样例：</strong></p>
+<pre>3 4
+1 2 1 0
+2 4 2 1
+0 3 3 0</pre>
+    <p><strong>输出样例：</strong>2</p>
+
+    <div class="explanation">
+      <h4>📝 详细解析</h4>
+      <p><strong>核心思路：</strong></p>
+      <ol>
+        <li>子矩阵大小固定为 <strong>2×2</strong>（题目名称"二阶矩阵"就暗示了这一点）。</li>
+        <li>好矩阵的条件：<strong>左上 × 右下 == 右上 × 左下</strong>（即对角线的乘积相等）。</li>
+        <li>遍历所有可能的 2×2 子矩阵：对于每个 (i, j) 作为左上角，检查以它为起点的 2×2 子矩阵。</li>
+        <li>共有 <strong>(n-1) × (m-1)</strong> 个 2×2 子矩阵需要检查。</li>
+      </ol>
+
+      <p><strong>样例执行过程：</strong></p>
+<pre>矩阵：
+1 2 1 0
+2 4 2 1
+0 3 3 0
+
+检查所有 2×2 子矩阵：
+(0,0): 1×4=4, 2×2=4 → 4==4 ✓ 好的!
+(0,1): 2×2=4, 1×4=4 → 4==4 ✓ 好的!
+(0,2): 1×1=1, 0×2=0 → 1!=0 ✗
+(1,0): 2×3=6, 0×4=0 → 6!=0 ✗
+(1,1): 4×3=12, 2×3=6 → 12!=6 ✗
+(1,2): 2×0=0, 1×3=3 → 0!=3 ✗
+
+总共 2 个好的子矩阵 → 输出 2</pre>
+
+      <p><strong>时间复杂度：</strong>O(n×m)，只需遍历每个可能的左上角，常数时间检查。</p>
+    </div>
+
+    <h4>参考代码：</h4>
+<pre><span class="cp">#include &lt;bits/stdc++.h&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">const</span> <span class="kw">int</span> N = 505;
+<span class="kw">int</span> n, m;
+<span class="kw">int</span> a[N][N];
+<span class="kw">int</span> ans;
+
+<span class="kw">int</span> main() {
+    scanf(<span class="str">"%d%d"</span>, &amp;n, &amp;m);
+    <span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt;= n; i++)
+        <span class="kw">for</span> (<span class="kw">int</span> j = 1; j &lt;= m; j++)
+            scanf(<span class="str">"%d"</span>, &amp;a[i][j]);
+    <span class="kw">for</span> (<span class="kw">int</span> i = 1; i &lt; n; i++)
+        <span class="kw">for</span> (<span class="kw">int</span> j = 1; j &lt; m; j++)
+            <span class="kw">if</span> (a[i][j] * a[i + 1][j + 1] == a[i + 1][j] * a[i][j + 1])
+                ans++;
+    printf(<span class="str">"%d\n"</span>, ans);
+    <span class="kw">return</span> 0;
+}</pre>
+    <div class="key-point">
+      <span class="tag concept">核心知识点</span>
+      <strong>二维数组遍历</strong>：枚举所有 2×2 子矩阵的左上角 &nbsp;|&nbsp; <strong>条件判断</strong>：对角乘积相等 &nbsp;|&nbsp; <strong>注意</strong>：循环边界是 i &lt; n 和 j &lt; m，因为需要 i+1 和 j+1
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>CCF GESP C++ 四级 2025年03月真题讲解 · 适用于小学生家长辅导</p>
+  <p>所有题目答案均来源于官方试卷标注，解析为详细推导过程</p>
+</footer>
+
+</div>
+</body>
+</html>

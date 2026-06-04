@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCF GESP C++ 四级 2025年12月 真题讲解</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #d97706;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 20px;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    border-radius: 16px;
+    margin-bottom: 32px;
+  }
+  header h1 { font-size: 2em; margin-bottom: 8px; }
+  header p { opacity: 0.9; font-size: 1.1em; }
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 28px;
+    margin-bottom: 32px;
+  }
+  .toc h3 { margin-bottom: 12px; color: var(--primary); }
+  .toc ul { list-style: none; padding: 0; }
+  .toc li { padding: 6px 0; }
+  .toc a { color: var(--primary); text-decoration: none; font-weight: 500; }
+  .toc a:hover { text-decoration: underline; }
+  .section-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 40px 0 20px;
+    padding: 12px 20px;
+    background: var(--primary);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .badge {
+    background: rgba(255,255,255,0.25);
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 400;
+  }
+  .answer-key {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .answer-key table { width: 100%; border-collapse: collapse; text-align: center; }
+  .answer-key th, .answer-key td {
+    padding: 8px 6px;
+    border: 1px solid var(--border);
+    font-size: 0.95em;
+  }
+  .answer-key th { background: #f1f5f9; font-weight: 600; }
+  .answer-key .ans { font-weight: 700; color: var(--primary); font-size: 1.1em; }
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .question-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .question-header {
+    background: #f1f5f9;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .question-num {
+    background: var(--primary);
+    color: white;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+  .question-type { flex: 1; font-weight: 600; color: var(--text-secondary); font-size: 0.9em; }
+  .answer-badge { padding: 4px 16px; border-radius: 20px; font-weight: 700; font-size: 0.9em; }
+  .answer-badge.correct { background: #dcfce7; color: var(--success); }
+  .answer-badge.wrong { background: #fee2e2; color: var(--danger); }
+  .question-body { padding: 20px; }
+  .question-body pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: "Fira Code", "Consolas", monospace;
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin: 12px 0;
+  }
+  .options { margin: 12px 0; }
+  .options div {
+    padding: 8px 14px;
+    border-radius: 8px;
+    margin: 4px 0;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+  }
+  .options div.highlight {
+    background: #dcfce7;
+    border-color: var(--success);
+    font-weight: 600;
+  }
+  .explanation {
+    margin-top: 16px;
+    padding: 16px;
+    background: #fffbeb;
+    border-radius: 10px;
+    border: 1px solid #fde68a;
+  }
+  .explanation h4 { color: var(--warning); margin-bottom: 8px; }
+  .explanation ul, .explanation ol { padding-left: 20px; }
+  .explanation li { margin: 4px 0; }
+  .key-point {
+    background: #fef9c3;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 12px;
+    font-weight: 500;
+  }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-right: 8px;
+  }
+  .tag.concept { background: #dbeafe; color: #1e40af; }
+  .tag.formula { background: #dcfce7; color: #166534; }
+  .tag.calc { background: #fce7f3; color: #9d174d; }
+  pre .kw { color: #93c5fd; }
+  pre .str { color: #86efac; }
+  pre .cp { color: #c084fc; }
+  pre .cmt { color: #94a3b8; font-style: italic; }
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-size: 0.85em;
+  }
+  table { border-collapse: collapse; }
+  @media (max-width: 640px) {
+    body { padding: 10px; }
+    header { padding: 24px 16px; }
+    header h1 { font-size: 1.4em; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>CCF GESP 认证 C++ 四级</h1>
+  <p>2025年12月 · 真题详解</p>
+  <p style="font-size:0.9em;margin-top:8px;">适合小学生理解的详细解题过程</p>
+</header>
+
+<!-- 目录 -->
+<div class="toc">
+  <h3>📋 目录</h3>
+  <ul>
+    <li><a href="#s1">一、单选题（15题，每题2分，共30分）</a></li>
+    <li><a href="#s2">二、判断题（10题，每题2分，共20分）</a></li>
+    <li><a href="#s3">三、编程题（2题，每题25分，共50分）</a></li>
+  </ul>
+</div>
+
+<!-- 单选题 答案速查 -->
+<h2 class="section-title" id="s1">一、单选题 <span class="badge">15题 / 30分</span></h2>
+<div class="answer-key">
+  <table>
+    <tr><th>题号</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr>
+    <tr><th>答案</th><td class="ans">C</td><td class="ans">C</td><td class="ans">B</td><td class="ans">D</td><td class="ans">B</td><td class="ans">A</td><td class="ans">C</td><td class="ans">A</td><td class="ans">B</td><td class="ans">B</td><td class="ans">B</td><td class="ans">A</td><td class="ans">B</td><td class="ans">D</td><td class="ans">B</td></tr>
+  </table>
+</div>
+
+<!-- ==================== 单选题 ==================== -->
+
+<!-- 第1题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">1</div>
+    <div class="question-type">单选题 · 指针</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p>小杨想让指针 <code>p</code> 指向整数变量 <code>x</code>，正确写法是（ ）。</p>
+    <div class="options">
+      <div>A. <code>int p = &x;</code></div>
+      <div>B. <code>int *p = x;</code></div>
+      <div class="highlight">C. <code>int *p = &x;</code> ✅</div>
+      <div>D. <code>p = *x;</code></div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>要声明一个指针并让它指向某个变量，需要两步：</p>
+      <ol>
+        <li><code>int *p</code> — 声明 p 是一个"指向 int 的指针"</li>
+        <li><code>= &x</code> — 用取地址符 & 获取 x 的地址赋值给 p</li>
+      </ol>
+      <p><strong>逐个分析：</strong></p>
+      <ul>
+        <li><strong>A</strong>：<code>int p = &x;</code> — p 是普通 int 变量，不能存储地址，编译错误。</li>
+        <li><strong>B</strong>：<code>int *p = x;</code> — 把 x 的<em>值</em>（不是地址）赋给指针 p，类型不匹配。</li>
+        <li><strong>C</strong>：<code>int *p = &x;</code> — 正确！声明指针 p 并用 x 的地址初始化。</li>
+        <li><strong>D</strong>：<code>p = *x;</code> — p 未声明类型，且 *x 是对 x 解引用（当作指针），错误。</li>
+      </ul>
+    </div>
+    <div class="key-point">💡 声明指针的格式：<code>类型 *指针名 = &变量名;</code>，* 表示"指针"，& 表示"取地址"。</div>
+    <div><span class="tag concept">指针声明</span><span class="tag formula">取地址符 &</span></div>
+  </div>
+</div>
+
+<!-- 第2题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">2</div>
+    <div class="question-type">单选题 · 指针接力</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p>小杨写了如下的指针接力程序，程序执行完后变量 <code>a</code>、<code>*p1</code> 和 <code>*p2</code> 的值分别是（ ）。</p>
+<pre>int a = 5;
+int* p1 = &a;
+int* p2 = p1;
+*p2 = 10;</pre>
+    <div class="options">
+      <div>A. 5 10 10</div>
+      <div>B. 5 10 15</div>
+      <div class="highlight">C. 10 10 10 ✅</div>
+      <div>D. 5 5 10</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>逐步执行：</p>
+      <ol>
+        <li><code>int a = 5;</code> → a 的值是 5</li>
+        <li><code>int* p1 = &a;</code> → p1 指向 a（存的是 a 的地址）</li>
+        <li><code>int* p2 = p1;</code> → p2 也指向 a（p1 和 p2 指向同一块内存！）</li>
+        <li><code>*p2 = 10;</code> → 通过 p2 修改了 a 的值，a 变成了 10</li>
+      </ol>
+      <p>由于 p1 和 p2 都指向同一个变量 a，所以 <code>*p1</code> 和 <code>*p2</code> 都等于 a 的值 = <strong>10</strong>。</p>
+      <p>最终：a = 10，*p1 = 10，*p2 = 10。</p>
+    </div>
+    <div class="key-point">💡 多个指针可以指向同一个变量。修改任何一个指针指向的内容，其他指针看到的值也会跟着变——因为它们看的是同一块内存。</div>
+    <div><span class="tag concept">指针指向</span><span class="tag concept">解引用</span></div>
+  </div>
+</div>
+
+<!-- 第3题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">3</div>
+    <div class="question-type">单选题 · 二维数组访问</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p>小杨用一个二维数组表示棋盘，其中 1 表示有棋子，0 表示没有棋子。他想知道第 2 行第 3 列有没有棋子，可采用的代码是：（ ）。</p>
+<pre>int a[3][4] = {
+    {1, 0, 1, 0},
+    {0, 1, 0, 1},
+    {1, 1, 0, 0}
+};</pre>
+    <div class="options">
+      <div>A. <code>cout &lt;&lt; a[1, 2] &lt;&lt; endl;</code></div>
+      <div class="highlight">B. <code>cout &lt;&lt; a[1][2] &lt;&lt; endl;</code> ✅</div>
+      <div>C. <code>cout &lt;&lt; a(1, 2) &lt;&lt; endl;</code></div>
+      <div>D. <code>cout &lt;&lt; a{1}{2} &lt;&lt; endl;</code></div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>C++ 中二维数组的访问必须使用 <strong>两个方括号</strong>：<code>a[行][列]</code>。</p>
+      <p>注意数组下标从 <strong>0</strong> 开始，所以：</p>
+      <ul>
+        <li>"第 2 行"对应下标 <strong>1</strong></li>
+        <li>"第 3 列"对应下标 <strong>2</strong></li>
+        <li>访问的是 <code>a[1][2]</code>，值为 <strong>0</strong>（没有棋子）</li>
+      </ul>
+      <p>A 用了逗号运算符，C 是函数调用语法，D 是大括号，这些都不是 C++ 中访问二维数组的正确语法。</p>
+    </div>
+    <div class="key-point">💡 C++ 二维数组只能写成 <code>a[i][j]</code> 的形式，不能用 <code>a[i, j]</code>、<code>a(i, j)</code> 或 <code>a{i}{j}</code>。</div>
+    <div><span class="tag concept">二维数组</span><span class="tag concept">下标</span></div>
+  </div>
+</div>
+
+<!-- 第4题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">4</div>
+    <div class="question-type">单选题 · 指针与二维数组</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p>执行完下面的代码后，<code>*(p + 5)</code> 和 <code>arr[1][1]</code> 的值分别是（ ）。</p>
+<pre>int arr[3][4] = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}};
+int* p = &arr[0][0];</pre>
+    <div class="options">
+      <div>A. 5 6</div>
+      <div>B. 6 5</div>
+      <div>C. 5 5</div>
+      <div class="highlight">D. 6 6 ✅</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>C++ 中二维数组在内存中是<strong>按行连续存放</strong>的。arr[3][4] 共 12 个元素，内存布局为：</p>
+      <table style="border-collapse:collapse;margin:8px 0;">
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">arr[0][0]=1</td><td style="border:1px solid #ccc;padding:4px 8px;">[0][1]=2</td><td style="border:1px solid #ccc;padding:4px 8px;">[0][2]=3</td><td style="border:1px solid #ccc;padding:4px 8px;">[0][3]=4</td><td style="border:1px solid #ccc;padding:4px 8px;">[1][0]=5</td><td style="border:1px solid #ccc;padding:4px 8px;background:#fef9c3;">[1][1]=6</td><td style="border:1px solid #ccc;padding:4px 8px;">[1][2]=7</td><td style="border:1px solid #ccc;padding:4px 8px;">[1][3]=8</td><td style="border:1px solid #ccc;padding:4px 8px;">[2][0]=9</td><td style="border:1px solid #ccc;padding:4px 8px;">[2][1]=10</td><td style="border:1px solid #ccc;padding:4px 8px;">[2][2]=11</td><td style="border:1px solid #ccc;padding:4px 8px;">[2][3]=12</td></tr>
+      </table>
+      <p>指针 p 指向第 0 个元素（值为 1），那么：</p>
+      <ul>
+        <li>p + 0 → arr[0][0] = 1</li>
+        <li>p + 1 → arr[0][1] = 2</li>
+        <li>...</li>
+        <li><strong>p + 5</strong> → 第 5 个元素（从 0 开始数）= arr[1][1] = <strong>6</strong></li>
+      </ul>
+      <p>所以 <code>*(p + 5)</code> = 6，<code>arr[1][1]</code> 也 = 6，两者都是 <strong>6</strong>。</p>
+    </div>
+    <div class="key-point">💡 二维数组在内存中按行连续存放，<code>arr[i][j]</code> 等价于 <code>*(&arr[0][0] + i * 列数 + j)</code>。</div>
+    <div><span class="tag concept">指针运算</span><span class="tag concept">内存布局</span><span class="tag calc">行优先存储</span></div>
+  </div>
+</div>
+
+<!-- 第5题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">5</div>
+    <div class="question-type">单选题 · 三维数组</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p>执行完下面的代码后，<code>sum</code> 的值是（ ）。</p>
+<pre>int arr[2][3][2] = {
+        {{1,2}, {3,4}, {5,6}},
+        {{7,8}, {9,10}, {11,12}}
+    };
+int sum = 0;
+for(int i = 0; i < 2; i++)
+    for(int j = 0; j < 3; j++)
+        for(int k = 0; k < 2; k++)
+            if((i+j+k) % 2 == 0)
+                sum += arr[i][j][k];</pre>
+    <div class="options">
+      <div>A. 36</div>
+      <div class="highlight">B. 39 ✅</div>
+      <div>C. 78</div>
+      <div>D. 30</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>三维数组 arr[i][j][k]，遍历所有元素，只累加 <code>(i+j+k) % 2 == 0</code> 的元素。</p>
+      <p><strong>逐个检查：</strong></p>
+      <table style="border-collapse:collapse;text-align:center;margin:8px 0;">
+        <tr><th style="border:1px solid #ccc;padding:4px 8px;">i</th><th style="border:1px solid #ccc;padding:4px 8px;">j</th><th style="border:1px solid #ccc;padding:4px 8px;">k</th><th style="border:1px solid #ccc;padding:4px 8px;">i+j+k</th><th style="border:1px solid #ccc;padding:4px 8px;">%2==0?</th><th style="border:1px solid #ccc;padding:4px 8px;">值</th></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;background:#dcfce7;">✓</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">✗</td><td style="border:1px solid #ccc;padding:4px 8px;">-</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">✗</td><td style="border:1px solid #ccc;padding:4px 8px;">-</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">2</td><td style="border:1px solid #ccc;padding:4px 8px;background:#dcfce7;">✓</td><td style="border:1px solid #ccc;padding:4px 8px;">4</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">2</td><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">2</td><td style="border:1px solid #ccc;padding:4px 8px;background:#dcfce7;">✓</td><td style="border:1px solid #ccc;padding:4px 8px;">5</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">2</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">3</td><td style="border:1px solid #ccc;padding:4px 8px;">✗</td><td style="border:1px solid #ccc;padding:4px 8px;">-</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">✗</td><td style="border:1px solid #ccc;padding:4px 8px;">-</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">2</td><td style="border:1px solid #ccc;padding:4px 8px;background:#dcfce7;">✓</td><td style="border:1px solid #ccc;padding:4px 8px;">8</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">2</td><td style="border:1px solid #ccc;padding:4px 8px;background:#dcfce7;">✓</td><td style="border:1px solid #ccc;padding:4px 8px;">9</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">3</td><td style="border:1px solid #ccc;padding:4px 8px;">✗</td><td style="border:1px solid #ccc;padding:4px 8px;">-</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">2</td><td style="border:1px solid #ccc;padding:4px 8px;">0</td><td style="border:1px solid #ccc;padding:4px 8px;">3</td><td style="border:1px solid #ccc;padding:4px 8px;">✗</td><td style="border:1px solid #ccc;padding:4px 8px;">-</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">2</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">4</td><td style="border:1px solid #ccc;padding:4px 8px;background:#dcfce7;">✓</td><td style="border:1px solid #ccc;padding:4px 8px;">12</td></tr>
+      </table>
+      <p><strong>累加符合条件的值：</strong>1 + 4 + 5 + 8 + 9 + 12 = <strong>39</strong></p>
+    </div>
+    <div class="key-point">💡 三维数组遍历时，注意三个下标之和的奇偶性判断。可以找规律：当 i+j+k 为偶数时累加。</div>
+    <div><span class="tag concept">三维数组</span><span class="tag calc">遍历累加</span><span class="tag formula">奇偶判断</span></div>
+  </div>
+</div>
+
+<!-- 第6题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">6</div>
+    <div class="question-type">单选题 · 变量作用域</div>
+    <div class="answer-badge correct">答案：A</div>
+  </div>
+  <div class="question-body">
+    <p>执行完下面的代码后，输出是（ ）。</p>
+<pre>int a = 1;
+
+void test() {
+    int a = 2;
+    {
+        int a = 3;
+        a++;
+    }
+    a++;
+    cout &lt;&lt; a &lt;&lt; " ";
+}
+
+int main() {
+    test();
+    cout &lt;&lt; a;
+    return 0;
+}</pre>
+    <div class="options">
+      <div class="highlight">A. 3 1 ✅</div>
+      <div>B. 4 1</div>
+      <div>C. 3 2</div>
+      <div>D. 4 2</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这道题考查<strong>作用域</strong>——同一变量名在不同位置代表不同的变量：</p>
+      <ol>
+        <li><strong>全局 a = 1</strong>（文件最外层）</li>
+        <li>进入 test()：<strong>test 内的 a = 2</strong>（覆盖了全局 a）</li>
+        <li>进入花括号 {} 块：<strong>块内的 a = 3</strong>（又覆盖了 test 的 a）</li>
+        <li>块内 a++ → 块内的 a 变成 4，<strong>但块结束后这 a 就销毁了</strong></li>
+        <li>退出花括号，回到 test 层：test 的 a 仍然是 2，a++ → test 的 a = <strong>3</strong></li>
+        <li>cout &lt;&lt; a → 输出 <strong>3</strong></li>
+        <li>回到 main：cout &lt;&lt; a → 全局 a = <strong>1</strong></li>
+      </ol>
+      <p>最终输出：<strong>3 1</strong></p>
+    </div>
+    <div class="key-point">💡 内层作用域可以定义同名变量"遮蔽"外层变量。花括号 {} 会创建一个新的作用域，里面的变量离开花括号就消失了。</div>
+    <div><span class="tag concept">作用域</span><span class="tag concept">变量遮蔽</span><span class="tag concept">全局变量</span></div>
+  </div>
+</div>
+
+<!-- 第7题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">7</div>
+    <div class="question-type">单选题 · 参数传递方式</div>
+    <div class="answer-badge correct">答案：C</div>
+  </div>
+  <div class="question-body">
+    <p>执行完下面的代码后，<code>a</code>、<code>b</code> 和 <code>c</code> 的值分别是（ ）。</p>
+<pre>void byValue(int x) { x = 100; }
+void byRef(int& x) { x = 200; }
+void byPointer(int* x) { *x = 300; }
+
+int main() {
+    int a = 1, b = 2, c = 3;
+    byValue(a);
+    byRef(b);
+    byPointer(&c);
+    return 0;
+}</pre>
+    <div class="options">
+      <div>A. 100 200 300</div>
+      <div>B. 1 2 3</div>
+      <div class="highlight">C. 1 200 300 ✅</div>
+      <div>D. 1 2 300</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>三种参数传递方式的效果完全不同：</p>
+      <ul>
+        <li><strong>byValue(a)</strong>：传值调用。x 是 a 的<em>副本</em>，修改 x 不影响 a。a 还是 <strong>1</strong>。</li>
+        <li><strong>byRef(b)</strong>：引用传递。x 是 b 的<em>别名</em>，修改 x 就是修改 b。b 变成 <strong>200</strong>。</li>
+        <li><strong>byPointer(&c)</strong>：指针传递。传入 c 的地址，通过 *x 直接修改 c 的内存。c 变成 <strong>300</strong>。</li>
+      </ul>
+      <p>最终：a = <strong>1</strong>，b = <strong>200</strong>，c = <strong>300</strong></p>
+    </div>
+    <div class="key-point">💡 三种传递方式的区别：<strong>传值</strong>不改变原变量；<strong>传引用（int&）</strong>和<strong>传指针（int*）</strong>都能改变原变量。</div>
+    <div><span class="tag concept">传值</span><span class="tag concept">传引用</span><span class="tag concept">传指针</span></div>
+  </div>
+</div>
+
+<!-- 第8题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">8</div>
+    <div class="question-type">单选题 · 嵌套结构体</div>
+    <div class="answer-badge correct">答案：A</div>
+  </div>
+  <div class="question-body">
+    <p>运行如下代码会输出（ ）。</p>
+<pre>struct Point {
+    int x, y;
+};
+
+struct Rectangle {
+    Point topLeft;
+    Point bottomRight;
+};
+
+int main() {
+    Rectangle rect = {{10, 10}, {20, 20}};
+    rect.topLeft.x = 5;
+    Point* p = &rect.bottomRight;
+    p->y = 5;
+    cout &lt;&lt; rect.topLeft.x + rect.bottomRight.y;
+    return 0;
+}</pre>
+    <div class="options">
+      <div class="highlight">A. 10 ✅</div>
+      <div>B. 30</div>
+      <div>C. 15</div>
+      <div>D. 20</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>逐步分析：</p>
+      <ol>
+        <li>初始：rect = {{10, 10}, {20, 20}}，即 topLeft=(10,10)，bottomRight=(20,20)</li>
+        <li><code>rect.topLeft.x = 5;</code> → topLeft 变成 (5, 10)</li>
+        <li><code>Point* p = &rect.bottomRight;</code> → p 指向 bottomRight</li>
+        <li><code>p->y = 5;</code> → 等价于 <code>(*p).y = 5</code>，即 bottomRight.y = 5，bottomRight 变成 (20, 5)</li>
+        <li>计算：rect.topLeft.x + rect.bottomRight.y = <strong>5 + 5 = 10</strong></li>
+      </ol>
+      <p><code>p->y</code> 是 <code>(*p).y</code> 的简写，通过指针访问结构体成员。</p>
+    </div>
+    <div class="key-point">💡 <code>p->成员</code> 是通过指针访问结构体成员的快捷写法，等价于 <code>(*p).成员</code>。结构体里可以嵌套另一个结构体。</div>
+    <div><span class="tag concept">嵌套结构体</span><span class="tag concept">箭头运算符 -></span></div>
+  </div>
+</div>
+
+<!-- 第9题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">9</div>
+    <div class="question-type">单选题 · 递推/斐波那契</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p>给定函数 <code>climbStairs(int n)</code> 的定义如下，则 <code>climbStairs(5)</code> 的返回的值是（ ）。</p>
+<pre>int climbStairs(int n) {
+    if(n <= 2) return n;
+    int a = 1, b = 2;
+    for(int i = 3; i <= n; i++) {
+        int temp = a + b;
+        a = b;
+        b = temp;
+    }
+    return b;
+}</pre>
+    <div class="options">
+      <div>A. 5</div>
+      <div class="highlight">B. 8 ✅</div>
+      <div>C. 13</div>
+      <div>D. 10</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这是爬楼梯问题的递推解法（也是斐波那契数列），f(n) = f(n-1) + f(n-2)：</p>
+      <table style="border-collapse:collapse;text-align:center;margin:8px 0;">
+        <tr><th style="border:1px solid #ccc;padding:4px 8px;">i</th><th style="border:1px solid #ccc;padding:4px 8px;">操作</th><th style="border:1px solid #ccc;padding:4px 8px;">temp = a + b</th><th style="border:1px solid #ccc;padding:4px 8px;">a</th><th style="border:1px solid #ccc;padding:4px 8px;">b</th></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">初始</td><td style="border:1px solid #ccc;padding:4px 8px;">-</td><td style="border:1px solid #ccc;padding:4px 8px;">-</td><td style="border:1px solid #ccc;padding:4px 8px;">1</td><td style="border:1px solid #ccc;padding:4px 8px;">2</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">i=3</td><td style="border:1px solid #ccc;padding:4px 8px;">temp=1+2=3, a=2, b=3</td><td style="border:1px solid #ccc;padding:4px 8px;">3</td><td style="border:1px solid #ccc;padding:4px 8px;">2</td><td style="border:1px solid #ccc;padding:4px 8px;">3</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">i=4</td><td style="border:1px solid #ccc;padding:4px 8px;">temp=2+3=5, a=3, b=5</td><td style="border:1px solid #ccc;padding:4px 8px;">5</td><td style="border:1px solid #ccc;padding:4px 8px;">3</td><td style="border:1px solid #ccc;padding:4px 8px;">5</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:4px 8px;">i=5</td><td style="border:1px solid #ccc;padding:4px 8px;">temp=3+5=8, a=5, b=8</td><td style="border:1px solid #ccc;padding:4px 8px;">8</td><td style="border:1px solid #ccc;padding:4px 8px;">5</td><td style="border:1px solid #ccc;padding:4px 8px;">8</td></tr>
+      </table>
+      <p>循环结束，返回 b = <strong>8</strong>。</p>
+      <p>参考：斐波那契数列 f(1)=1, f(2)=2, f(3)=3, f(4)=5, f(5)=8, f(6)=13...</p>
+    </div>
+    <div class="key-point">💡 爬楼梯问题的递推公式：f(n) = f(n-1) + f(n-2)。用两个变量 a、b 滚动更新，避免用数组，空间复杂度 O(1)。</div>
+    <div><span class="tag concept">递推</span><span class="tag concept">斐波那契</span><span class="tag calc">滚动变量</span></div>
+  </div>
+</div>
+
+<!-- 第10题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">10</div>
+    <div class="question-type">单选题 · 排序稳定性</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p>对如下 4 个扑克牌进行排序，</p>
+<pre>struct Card {
+    int value;
+    char suit;   // 花色
+};
+
+Card cards[4] = {{5,'A'}, {3,'B'}, {5,'C'}, {3,'D'}};</pre>
+    <p>使用某排序算法按 value 排序后，结果为: {3,'D'}, {3,'B'}, {5,'A'}, {5,'C'}，则这个排序算法是稳定的吗？</p>
+    <div class="options">
+      <div>A. 稳定，因为相同 value 的元素相对顺序保持不变</div>
+      <div class="highlight">B. 不稳定，因为 {3,'D'} 出现在 {3,'B'} 之前 ✅</div>
+      <div>C. 无法判断</div>
+      <div>D. 稳定，因为结果是有序的</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>稳定排序</strong>的定义：值相同的元素，排序后它们的<strong>相对顺序保持不变</strong>。</p>
+      <p>原始顺序中，value=3 的牌：<strong>{3,'B'} 在前，{3,'D'} 在后</strong>（B → D）</p>
+      <p>排序后结果中，value=3 的牌：<strong>{3,'D'} 在前，{3,'B'} 在后</strong>（D → B）</p>
+      <p>相对顺序变了！原来 B 在 D 前面，排序后 D 跑到 B 前面了。所以——<strong>不稳定</strong>。</p>
+      <p>注意：不能只看"排序后结果是否有序"，还要看相等元素的相对顺序是否保留。</p>
+    </div>
+    <div class="key-point">💡 稳定性判断方法：找排序前和排序后<strong>值相同的元素</strong>，检查它们的先后顺序是否保持一致。</div>
+    <div><span class="tag concept">排序稳定性</span><span class="tag concept">相对顺序</span></div>
+  </div>
+</div>
+
+<!-- 第11题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">11</div>
+    <div class="question-type">单选题 · 选择排序（选前K名）</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p>下面的函数 <code>selectTopK()</code> 实现从 n 个学生中选出前 k 名成绩最好的学生颁发奖学金（不需要对所有学生完全排序，只需要找出前 k 名），则横线上应填写（ ）。</p>
+<pre>struct Student {
+    string name;
+    int score;
+};
+
+void selectTopK(Student students[], int n, int k) {
+    for (int i = 0; i < k; i++) {
+        int maxIdx = i;
+        for (<span style="background:#fef9c3;">____________________</span>) {    // 在此处填入代码
+            if (students[j].score > students[maxIdx].score) {
+                maxIdx = j;
+            }
+        }
+        if (maxIdx != i) {
+            Student temp = students[i];
+            students[i] = students[maxIdx];
+            students[maxIdx] = temp;
+        }
+    }
+}</pre>
+    <div class="options">
+      <div>A. <code>int j = 0; j &lt; n; j++</code></div>
+      <div class="highlight">B. <code>int j = i + 1; j &lt; n; j++</code> ✅</div>
+      <div>C. <code>int j = i; j &lt; n; j++</code></div>
+      <div>D. <code>int j = 1; j &lt;= n; j++</code></div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这是<strong>选择排序的变体</strong>：外层循环执行 k 次，每次从剩余未排序的元素中选出<strong>最大值</strong>放到位置 i。</p>
+      <p>内层循环应该从 <strong>i+1</strong> 开始，因为：</p>
+      <ul>
+        <li>位置 i 已经假设是当前最大值（maxIdx = i）</li>
+        <li>需要和 i 后面的所有元素（i+1 到 n-1）比较</li>
+        <li>找到真正最大值后，和位置 i 交换</li>
+      </ul>
+      <p>A 从 0 开始会重复比较已排好的元素；C 从 i 开始多比较一次自己；D 从 1 开始且用 &lt;= 是错误的。只有 <strong>B</strong> 正确：<code>int j = i + 1; j &lt; n; j++</code></p>
+    </div>
+    <div class="key-point">💡 选择排序的内循环从 <code>i+1</code> 开始，在未排序部分找最大/最小值。改进版可以在找到前 k 个后就停止，不必排完所有元素。</div>
+    <div><span class="tag concept">选择排序</span><span class="tag concept">topK问题</span></div>
+  </div>
+</div>
+
+<!-- 第12题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">12</div>
+    <div class="question-type">单选题 · 插入排序思想应用</div>
+    <div class="answer-badge correct">答案：A</div>
+  </div>
+  <div class="question-body">
+    <p>某游戏的排行榜系统需要实时更新玩家分数。每次只有一个玩家的分数发生变化，排行榜已经是按分数降序排列的。现在需要将更新后的玩家调整到正确位置。则两处横线上应分别填写（ ）。</p>
+<pre>void updateRanking(Player players[], int size, int playerIdx) {
+    Player updatedPlayer = players[playerIdx];
+
+    if (playerIdx > 0 && updatedPlayer.score > players[playerIdx - 1].score) {
+        int i = playerIdx;
+        while (<span style="background:#fef9c3;">_______________①_____________</span>) {
+            players[i] = players[i - 1];
+            i--;
+        }
+        players[i] = updatedPlayer;
+    }
+    else if (playerIdx < size - 1 && updatedPlayer.score < players[playerIdx + 1].score) {
+        int i = playerIdx;
+        while (<span style="background:#fef9c3;">_______________②_____________</span>) {
+            players[i] = players[i + 1];
+            i++;
+        }
+        players[i] = updatedPlayer;
+    }
+}</pre>
+    <div class="options">
+      <div class="highlight">A. ① <code>i > 0 && updatedPlayer.score > players[i - 1].score</code> ② <code>i < size - 1 && updatedPlayer.score < players[i + 1].score</code> ✅</div>
+      <div>B. ① <code>i < size - 1 && updatedPlayer.score < players[i + 1].score</code> ② <code>i > 0 && updatedPlayer.score > players[i - 1].score</code></div>
+      <div>C. ① <code>i > 0 && updatedPlayer.score < players[i - 1].score</code> ② <code>i < size - 1 && updatedPlayer.score < players[i + 1].score</code></div>
+      <div>D. ① <code>i > 0 && updatedPlayer.score < players[i - 1].score</code> ② <code>i < size - 1 && updatedPlayer.score > players[i + 1].score</code></div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这是<strong>插入排序思想</strong>的应用。排名是降序的（分数高的在前）。</p>
+      <p><strong>情况① — 分数提高，需要向前移动：</strong></p>
+      <ul>
+        <li>updatedPlayer 的分数变大了，应该往前移</li>
+        <li>条件：<code>i > 0</code>（没到最前面）且 updatedPlayer 的分数 > 前一个玩家的分数</li>
+        <li>答案：<code>i > 0 && updatedPlayer.score > players[i - 1].score</code></li>
+      </ul>
+      <p><strong>情况② — 分数降低，需要向后移动：</strong></p>
+      <ul>
+        <li>updatedPlayer 的分数变小了，应该往后移</li>
+        <li>条件：<code>i < size - 1</code>（没到最后面）且 updatedPlayer 的分数 < 后一个玩家的分数</li>
+        <li>答案：<code>i < size - 1 && updatedPlayer.score < players[i + 1].score</code></li>
+      </ul>
+      <p>只有 <strong>A</strong> 正确。B 把两个条件写反了，C 和 D 的比较方向错了。</p>
+    </div>
+    <div class="key-point">💡 插入排序的核心：把元素插入到已排序序列的正确位置。分数提高向前插，分数降低向后插。注意比较方向和边界条件。</div>
+    <div><span class="tag concept">插入排序</span><span class="tag concept">插入位置查找</span></div>
+  </div>
+</div>
+
+<!-- 第13题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">13</div>
+    <div class="question-type">单选题 · 时间复杂度</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p>给定如下算法，其时间复杂度为（ ）。</p>
+<pre>bool f(int arr[], int n, int target) {
+    for (int i = 0; i < (1 &lt;&lt; n); i++) {
+        int sum = 0;
+        for (int j = 0; j < n; j++) {
+            if (i & (1 &lt;&lt; j)) {
+                sum += arr[j];
+            }
+        }
+        if (sum == target) return true;
+    }
+    return false;
+}</pre>
+    <div class="options">
+      <div>A. O(n²)</div>
+      <div class="highlight">B. O(n·2ⁿ) ✅</div>
+      <div>C. O(2ⁿ)</div>
+      <div>D. O(n³)</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这是一个<strong>枚举所有子集</strong>的算法，判断是否存在子集之和等于 target。</p>
+      <ul>
+        <li>外层循环：i 从 0 到 2ⁿ-1，共 <strong>2ⁿ</strong> 次（每个 i 的二进制表示对应一种子集选择）</li>
+        <li>内层循环：j 从 0 到 n-1，共 <strong>n</strong> 次（检查每一位是否被选中）</li>
+        <li>总操作次数 ≈ 2ⁿ × n = <strong>n·2ⁿ</strong></li>
+      </ul>
+      <p>所以时间复杂度为 <strong>O(n·2ⁿ)</strong>。</p>
+      <p>注意：虽然是指数级别，但 n·2ⁿ 和 2ⁿ 是不同的。因为每个子集还需要 O(n) 时间计算和，所以多了一个 n 因子。</p>
+    </div>
+    <div class="key-point">💡 子集枚举的两层循环：外层 O(2ⁿ) 枚举所有子集，内层 O(n) 处理每个子集，总复杂度 O(n·2ⁿ)。</div>
+    <div><span class="tag concept">时间复杂度</span><span class="tag concept">子集枚举</span><span class="tag formula">O(n·2ⁿ)</span></div>
+  </div>
+</div>
+
+<!-- 第14题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">14</div>
+    <div class="question-type">单选题 · 文件读写</div>
+    <div class="answer-badge correct">答案：D</div>
+  </div>
+  <div class="question-body">
+    <p>执行下面 C++ 程序，会输出（ ）。</p>
+<pre>int main() {
+    ofstream fout("test.txt");
+    fout &lt;&lt; "Happy" &lt;&lt; endl;
+    fout &lt;&lt; "New Year";
+    fout.close();
+
+    ifstream fin("test.txt");
+    string s1, s2;
+    fin &gt;&gt; s1;
+    getline(fin, s2);
+    fin.close();
+
+    cout &lt;&lt; s1 &lt;&lt; "|" &lt;&lt; s2;
+    return 0;
+}</pre>
+    <div class="options">
+      <div>A. Happy|New Year</div>
+      <div>B. Happy| New Year</div>
+      <div>C. HappyNew Year|</div>
+      <div class="highlight">D. Happy| ✅</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p><strong>第一步 — 写入文件：</strong></p>
+      <ul>
+        <li><code>fout &lt;&lt; "Happy" &lt;&lt; endl;</code> → 写入 "Happy" + 换行符 \n</li>
+        <li><code>fout &lt;&lt; "New Year";</code> → 写入 "New Year"（没有 endl，没有换行）</li>
+        <li>文件内容：<code>Happy\nNew Year</code></li>
+      </ul>
+      <p><strong>第二步 — 读取文件：</strong></p>
+      <ul>
+        <li><code>fin &gt;&gt; s1;</code> → 读取 "Happy"（遇到 \n 停止），\n 留在缓冲区中</li>
+        <li><code>getline(fin, s2);</code> → 从当前位置读到下一个 \n。由于 \n 还在缓冲区最前面，getline 立即读到换行符，s2 = <strong>空字符串 ""</strong></li>
+      </ul>
+      <p><strong>输出：</strong><code>"Happy" + "|" + ""</code> = <strong>"Happy|"</strong></p>
+    </div>
+    <div class="key-point">💡 <code>>></code> 遇到空白字符（空格、换行、制表符）会停止，并把空白字符留在缓冲区。紧接着 <code>getline</code> 会读到这个残留的换行符，得到空字符串。</div>
+    <div><span class="tag concept">文件读写</span><span class="tag concept">getline陷阱</span><span class="tag concept">>> 与 getline</span></div>
+  </div>
+</div>
+
+<!-- 第15题 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">15</div>
+    <div class="question-type">单选题 · 异常处理</div>
+    <div class="answer-badge correct">答案：B</div>
+  </div>
+  <div class="question-body">
+    <p>执行下面 C++ 代码，会输出（ ）。</p>
+<pre>int divide(int a, int b) {
+    if(b == 0) throw "Division by zero";
+    return a / b;
+}
+
+int main() {
+    int result = 0;
+    try {
+        result = divide(10, 0);
+        cout &lt;&lt; "A";
+    }
+    catch(const char* msg) {
+        cout &lt;&lt; "B";
+        result = -1;
+    }
+    cout &lt;&lt; result;
+    return 0;
+}</pre>
+    <div class="options">
+      <div>A. A0</div>
+      <div class="highlight">B. B-1 ✅</div>
+      <div>C. A10</div>
+      <div>D. 程序崩溃</div>
+    </div>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>逐行分析执行流程：</p>
+      <ol>
+        <li>result 初始化为 0</li>
+        <li>进入 try 块，调用 divide(10, 0)</li>
+        <li>divide 中 b==0，<code>throw "Division by zero"</code> — 抛出异常</li>
+        <li>throw 之后的代码（return a/b 和 cout &lt;&lt; "A"）<strong>都不会被执行</strong></li>
+        <li>异常被 catch 捕获：输出 <strong>"B"</strong>，设置 result = <strong>-1</strong></li>
+        <li>退出 catch，执行 <code>cout &lt;&lt; result;</code> → 输出 <strong>"-1"</strong></li>
+      </ol>
+      <p>最终输出：<strong>"B-1"</strong></p>
+    </div>
+    <div class="key-point">💡 throw 之后的代码全部被跳过，控制权直接转移到匹配的 catch 块。try 块中抛出异常后的语句不会执行。</div>
+    <div><span class="tag concept">异常处理</span><span class="tag concept">try-catch</span><span class="tag concept">throw</span></div>
+  </div>
+</div>
+
+<!-- ==================== 判断题 ==================== -->
+<h2 class="section-title" id="s2">二、判断题 <span class="badge">10题 / 20分</span></h2>
+<div class="answer-key">
+  <table>
+    <tr><th>题号</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+    <tr><th>答案</th><td class="ans">✓</td><td class="ans">✗</td><td class="ans">✓</td><td class="ans">✓</td><td class="ans">✗</td><td class="ans">✓</td><td class="ans">✓</td><td class="ans">✗</td><td class="ans">✗</td><td class="ans">✓</td></tr>
+  </table>
+</div>
+
+<!-- 判断题1 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">1</div>
+    <div class="question-type">判断题 · 指针修改</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p>小杨正在调试他的温度传感器程序，其中变量 x 保存当前温度。下面这段代码运行后，变量 x 的值变成了 8。</p>
+<pre>int x = 5;
+int *p = &x;
+*p = *p + 3;</pre>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>逐行分析：</p>
+      <ol>
+        <li>x = 5</li>
+        <li>p 指向 x（p 存的是 x 的地址）</li>
+        <li>*p = *p + 3 → 等价于 x = x + 3 → x = 5 + 3 = <strong>8</strong></li>
+      </ol>
+      <p>x 确实变成了 8，说法正确。</p>
+    </div>
+    <div><span class="tag concept">指针解引用</span><span class="tag calc">*p = *p + 3</span></div>
+  </div>
+</div>
+
+<!-- 判断题2 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">2</div>
+    <div class="question-type">判断题 · 结构体嵌套</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p>一个结构体不能包含另一个结构体。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这个说法<strong>错误</strong>。C++ 中结构体可以嵌套另一个结构体。例如第 8 题中 Rectangle 就包含了两个 Point 结构体成员（topLeft 和 bottomRight）。</p>
+      <p>结构体嵌套是非常常见的用法，可以用来构建复杂的数据结构。</p>
+    </div>
+    <div class="key-point">💡 C++ 支持结构体嵌套。例如：<code>struct Rectangle { Point topLeft; Point bottomRight; };</code></div>
+    <div><span class="tag concept">结构体嵌套</span></div>
+  </div>
+</div>
+
+<!-- 判断题3 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">3</div>
+    <div class="question-type">判断题 · 二维数组内存布局</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p>在 C++ 中，定义如下二维数组：<code>int a[3][4];</code>，数组 a 在内存中是按行优先连续存放的，即 a[0][0]、a[0][1]、a[0][2]、a[0][3] 在内存中是连续的。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这个说法<strong>正确</strong>。C++ 中的二维数组采用<strong>行优先（row-major）</strong>存储方式：</p>
+      <p>内存顺序：a[0][0] → a[0][1] → a[0][2] → a[0][3] → a[1][0] → a[1][1] → ... → a[2][3]</p>
+      <p>同一行的元素在内存中紧挨着存放。这也是为什么第 4 题中可以用指针 p 连续访问所有元素。</p>
+    </div>
+    <div><span class="tag concept">行优先存储</span><span class="tag concept">内存布局</span></div>
+  </div>
+</div>
+
+<!-- 判断题4 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">4</div>
+    <div class="question-type">判断题 · 引用传递</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p>执行下面程序后，变量 a 的值会变成 15。</p>
+<pre>void add(int &x){
+    x += 10;
+}
+
+int a = 5;
+add(a);</pre>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这个说法<strong>正确</strong>。函数参数是 <code>int &x</code>（引用传递），x 是 a 的别名。</p>
+      <p><code>x += 10;</code> 等价于 <code>a += 10;</code>，所以 a = 5 + 10 = <strong>15</strong>。</p>
+    </div>
+    <div><span class="tag concept">引用传递</span><span class="tag calc">5 + 10 = 15</span></div>
+  </div>
+</div>
+
+<!-- 判断题5 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">5</div>
+    <div class="question-type">判断题 · 指针减法</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p>执行下面的 C++ 代码，会输出 8，因为两个指针地址相差 8 个字节（假设 int 占 4 字节）。</p>
+<pre>int arr[5] = {1, 2, 3, 4, 5};
+int* p1 = arr;
+int* p2 = arr + 2;
+
+cout &lt;&lt; p2 - p1;    // 输出结果</pre>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这个说法<strong>错误</strong>。指针减法的结果不是地址差（字节数），而是<strong>元素个数</strong>。</p>
+      <ul>
+        <li>p1 指向 arr[0]，p2 指向 arr[2]</li>
+        <li>它们之间相差 2 个 int 元素</li>
+        <li><strong>p2 - p1 = 2</strong>，不是 8</li>
+      </ul>
+      <p>虽然地址确实相差 8 个字节（2 × 4 = 8），但 C++ 中两个指针相减得到的是元素个数，而不是字节差。</p>
+    </div>
+    <div class="key-point">💡 指针减法 <code>p2 - p1</code> 返回的是<strong>两个指针之间隔了几个元素</strong>，不是字节差。要得到字节差需要先转换为 char*。</div>
+    <div><span class="tag concept">指针减法</span><span class="tag concept">指针运算</span></div>
+  </div>
+</div>
+
+<!-- 判断题6 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">6</div>
+    <div class="question-type">判断题 · 递推时间复杂度</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p>考虑用如下递推方式计算斐波那契数列，时间复杂度是 O(n)。</p>
+<pre>int n = 10;
+int f[20];
+f[0] = 0;
+f[1] = 1;
+for (int i = 2; i <= n; i++)
+    f[i] = f[i - 1] + f[i - 2];</pre>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这个说法<strong>正确</strong>。这是一个简单的 for 循环，从 2 到 n，共执行 n-1 次迭代。</p>
+      <p>每次迭代只做一次加法和一次赋值，是常数时间 O(1)。总时间 = (n-1) × O(1) = <strong>O(n)</strong>。</p>
+      <p>这就是"递推"（迭代法），比递归（O(2ⁿ)）高效得多。</p>
+    </div>
+    <div class="key-point">💡 递推（迭代）计算斐波那契数列的时间复杂度是 O(n)，而直接递归是 O(2ⁿ)。这也是为什么能用循环就不要用递归。</div>
+    <div><span class="tag concept">递推</span><span class="tag formula">时间复杂度 O(n)</span></div>
+  </div>
+</div>
+
+<!-- 判断题7 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">7</div>
+    <div class="question-type">判断题 · 排序稳定性</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p>冒泡排序和插入排序都是稳定排序算法。</p>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这个说法<strong>正确</strong>。</p>
+      <ul>
+        <li><strong>冒泡排序</strong>：相等元素不会交换，相对顺序保持不变 → 稳定</li>
+        <li><strong>插入排序</strong>：插入时遇到相等元素会停止（不往前插），相对顺序保持不变 → 稳定</li>
+        <li><strong>选择排序</strong>：交换可能跨越相等元素，会破坏相对顺序 → 不稳定（这是第 10 题对比的）</li>
+      </ul>
+    </div>
+    <div class="key-point">💡 记忆口诀：<strong>冒泡、插入、归并是稳定的；选择、快速、堆排序是不稳定的。</strong></div>
+    <div><span class="tag concept">排序稳定性</span><span class="tag concept">冒泡排序</span><span class="tag concept">插入排序</span></div>
+  </div>
+</div>
+
+<!-- 判断题8 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">8</div>
+    <div class="question-type">判断题 · 算法识别</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p>下面这段代码实现了选择排序算法。</p>
+<pre>void sort(int a[], int n) {
+    for (int i = 1; i < n; i++) {
+        int x = a[i];
+        int j = i - 1;
+        while (j >= 0 && a[j] > x) {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = x;
+    }
+}</pre>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这个说法<strong>错误</strong>。这段代码实现的不是选择排序，而是<strong>插入排序</strong>。</p>
+      <p>如何区分：</p>
+      <ul>
+        <li><strong>插入排序</strong>：从第 2 个元素开始（i=1），把当前元素"插入"到前面已排序部分的正确位置。代码中用 while 循环不断把比 x 大的元素后移。</li>
+        <li><strong>选择排序</strong>：每一轮在未排序部分中找最小/最大值，然后交换到正确位置。代码中应该有找最值的过程，但这里没有。</li>
+      </ul>
+    </div>
+    <div class="key-point">💡 一看循环结构就能区分：有 while 循环不断后移元素的是<strong>插入排序</strong>；有内循环找最值再交换的是<strong>选择排序</strong>。</div>
+    <div><span class="tag concept">插入排序 vs 选择排序</span><span class="tag concept">算法识别</span></div>
+  </div>
+</div>
+
+<!-- 判断题9 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">9</div>
+    <div class="question-type">判断题 · 默认参数与函数重载</div>
+    <div class="answer-badge wrong">答案：✗ 错误</div>
+  </div>
+  <div class="question-body">
+    <p>下面代码可以正常编译并输出 10。</p>
+<pre>#include &lt;iostream&gt;
+using namespace std;
+
+int calculate(int x, int y = 10);
+
+int main() {
+    cout &lt;&lt; calculate(5);    // 调用1
+    return 0;
+}
+
+int calculate(int x, int y) {
+    return x * y;
+}
+
+int calculate(int x) {   // 重载函数
+    return x * 2;
+}</pre>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这个说法<strong>错误</strong>。这段代码会<strong>编译失败</strong>。</p>
+      <p>原因是<strong>二义性</strong>：调用 <code>calculate(5)</code> 时，编译器有两个选择：</p>
+      <ol>
+        <li><code>calculate(int x, int y = 10)</code> — 使用默认参数，变成 calculate(5, 10)，返回 50</li>
+        <li><code>calculate(int x)</code> — 单参数版本，返回 10</li>
+      </ol>
+      <p>编译器无法确定该用哪个，会报"对 calculate 的调用有歧义"的编译错误。</p>
+    </div>
+    <div class="key-point">💡 默认参数和函数重载不能同时用于相同参数数量的情况，否则会造成调用歧义，编译不通过。</div>
+    <div><span class="tag concept">默认参数</span><span class="tag concept">函数重载</span><span class="tag concept">二义性</span></div>
+  </div>
+</div>
+
+<!-- 判断题10 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">10</div>
+    <div class="question-type">判断题 · 文件读写</div>
+    <div class="answer-badge correct">答案：✓ 正确</div>
+  </div>
+  <div class="question-body">
+    <p>执行下面代码会输出 100。</p>
+<pre>int main() {
+    ofstream fout("data.txt");
+    fout &lt;&lt; 10 &lt;&lt; " " &lt;&lt; 20 &lt;&lt; endl;
+    fout &lt;&lt; 30 &lt;&lt; " " &lt;&lt; 40;
+    fout.close();
+
+    ifstream fin("data.txt");
+    int a, b, c, d;
+    fin &gt;&gt; a &gt;&gt; b &gt;&gt; c &gt;&gt; d;
+    fin.close();
+
+    cout &lt;&lt; a + b + c + d;
+    return 0;
+}</pre>
+    <div class="explanation">
+      <h4>📝 解析</h4>
+      <p>这个说法<strong>正确</strong>。</p>
+      <p>写入内容：<code>10 20\n30 40</code>（endl = \n）</p>
+      <p>读取时 <code>fin &gt;&gt; a &gt;&gt; b &gt;&gt; c &gt;&gt; d</code>：</p>
+      <ul>
+        <li>>> 会自动跳过空白字符（空格、换行、制表符）</li>
+        <li>a = 10, b = 20, c = 30, d = 40</li>
+        <li>a + b + c + d = <strong>100</strong></li>
+      </ul>
+      <p>与第 14 题的区别在于：这里全部用 >> 读取，而第 14 题混用了 >> 和 getline。</p>
+    </div>
+    <div class="key-point">💡 <code>>></code> 读取时会自动跳过换行符和空格，所以连续使用 <code>>></code> 读取数字不会有第 14 题那种陷阱。</div>
+    <div><span class="tag concept">文件读写</span><span class="tag concept">>> 运算符</span><span class="tag calc">10+20+30+40=100</span></div>
+  </div>
+</div>
+
+<!-- ==================== 编程题 ==================== -->
+<h2 class="section-title" id="s3">三、编程题 <span class="badge">2题 / 50分</span></h2>
+
+<!-- 编程题1 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">1</div>
+    <div class="question-type">编程题 · 建造停机坪</div>
+    <div class="answer-badge correct">25分</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目描述：</strong></p>
+    <p>小 A 有一张 M 行 N 列的地形图，其中第 i 行第 j 列的数字 a[i][j] 代表坐标 (i, j) 的海拔高度。</p>
+    <p>停机坪为一个 3×3 的区域且内部所有 9 个点的最大高度和最小高度之差不超过 H。</p>
+    <p>小 A 想请你计算出，在所有适合建造停机坪的区域中，区域内部 9 个点海拔之和最大是多少。</p>
+
+    <p style="margin-top:16px;"><strong>输入样例：</strong></p>
+<pre>5 5 3
+5 5 5 5 5
+5 1 5 1 5
+5 5 5 5 5
+5 2 5 2 5
+3 5 5 5 2</pre>
+
+    <p><strong>输出样例：</strong></p>
+<pre>40</pre>
+
+    <div class="explanation">
+      <h4>📝 解题思路</h4>
+      <p>这是一个<strong>枚举所有可能的 3×3 区域</strong>的问题。</p>
+      <p><strong>步骤：</strong></p>
+      <ol>
+        <li>遍历所有可能的 3×3 子网格。左上角 (i, j) 的范围：i 从 1 到 M-2，j 从 1 到 N-2。</li>
+        <li>对于每个 3×3 区域：
+          <ul>
+            <li>计算这 9 个格子的总和、最大值和最小值</li>
+            <li>如果 max - min ≤ H，说明可以建造停机坪</li>
+            <li>更新最大总和</li>
+          </ul>
+        </li>
+        <li>输出最大总和。</li>
+      </ol>
+      <p><strong>时间复杂度：</strong>O(M × N × 9) = O(MN)，M, N ≤ 1000 可以通过。</p>
+
+      <p style="margin-top:12px;"><strong>参考代码：</strong></p>
+<pre>#include &lt;iostream&gt;
+using namespace std;
+int a[1010][1010];
+int main(){
+    int M, N, H;
+    cin &gt;&gt; M &gt;&gt; N &gt;&gt; H;
+    for (int i = 1; i &lt;= M; ++i) {
+        for (int j = 1; j &lt;= N; ++j) {
+            cin &gt;&gt; a[i][j];
+        }
+    }
+    int max_sum = 0;
+    for (int i = 1; i &lt;= M - 2; ++i) {
+        for (int j = 1; j &lt;= N - 2; ++j) {
+            int local_max = a[i][j], local_min = a[i][j], local_sum = 0;
+            for (int x = 0; x &lt; 3; ++x) {
+                for (int y = 0; y &lt; 3; ++y) {
+                    int height = a[i + x][j + y];
+                    local_sum += height;
+                    if (height &gt; local_max) local_max = height;
+                    if (height &lt; local_min) local_min = height;
+                }
+            }
+            if (local_max - local_min &lt;= H) {
+                if (local_sum &gt; max_sum) {
+                    max_sum = local_sum;
+                }
+            }
+        }
+    }
+    cout &lt;&lt; max_sum;
+    return 0;
+}</pre>
+    </div>
+    <div class="key-point">💡 核心是枚举所有 3×3 子网格，对每个子网格求 max、min 和 sum，判断 max-min ≤ H 后更新最大值。时间复杂度 O(MN)。</div>
+    <div><span class="tag concept">二维数组</span><span class="tag concept">枚举</span><span class="tag calc">子网格遍历</span></div>
+  </div>
+</div>
+
+<!-- 编程题2 -->
+<div class="question-card">
+  <div class="question-header">
+    <div class="question-num">2</div>
+    <div class="question-type">编程题 · 优先购买</div>
+    <div class="answer-badge correct">25分</div>
+  </div>
+  <div class="question-body">
+    <p><strong>题目描述：</strong></p>
+    <p>小 A 有 M 元预算。商店有 N 个商品，每个商品有商品名、价格和优先级三种属性，优先级是正整数，<strong>越小代表优先级越高</strong>。</p>
+    <p>小 A 的购物策略为：</p>
+    <ol>
+      <li>总是优先买优先级最高的东西</li>
+      <li>如果有多个最高优先级商品，购买价格最低的</li>
+      <li>如果有多个优先级最高且价格最低的商品，购买商品名字典序最小的</li>
+    </ol>
+    <p>按照字典序从小到大的顺序，输出所有购买商品的商品名。</p>
+
+    <p style="margin-top:16px;"><strong>输入样例：</strong></p>
+<pre>20 4
+apple 6 8
+bus 15 1
+cab 1 10
+water 4 8</pre>
+
+    <p><strong>输出样例：</strong></p>
+<pre>bus
+cab
+water</pre>
+
+    <div class="explanation">
+      <h4>📝 解题思路</h4>
+      <p>这是一个<strong>多关键字排序 + 贪心选择</strong>的问题。</p>
+      <p><strong>步骤：</strong></p>
+      <ol>
+        <li><strong>排序</strong>：按三关键字排序 → 优先级从小到大 → 价格从小到大 → 商品名字典序从小到大</li>
+        <li><strong>贪心购买</strong>：按排序后的顺序，如果当前商品价格 ≤ 剩余预算，就购买（预算减去价格），记录商品名</li>
+        <li><strong>输出</strong>：将购买的商品名按字典序排序后输出</li>
+      </ol>
+      <p>样例分析：</p>
+      <ul>
+        <li>排序后：bus(15元,优先级1) → water(4元,优先级8) → apple(6元,优先级8) → cab(1元,优先级10)</li>
+        <li>预算 20：买 bus(剩5) → 买 water(剩1) → apple 买不起(6>1) → 买 cab(剩0)</li>
+        <li>购买：bus, water, cab</li>
+        <li>字典序排序输出：bus → cab → water</li>
+      </ul>
+
+      <p style="margin-top:12px;"><strong>参考代码：</strong></p>
+<pre>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;string&gt;
+using namespace std;
+struct Item {
+    string name;
+    int price;
+    int priority;
+};
+bool cmp(const Item &a, const Item &b) {
+    if (a.priority != b.priority) return a.priority &lt; b.priority;
+    if (a.price != b.price) return a.price &lt; b.price;
+    return a.name &lt; b.name;
+}
+string s[1005];
+int main(){
+    int M, N;
+    cin &gt;&gt; M &gt;&gt; N;
+    Item items[N];
+    for (int i = 0; i &lt; N; ++i) {
+        cin &gt;&gt; items[i].name &gt;&gt; items[i].price &gt;&gt; items[i].priority;
+    }
+    sort(items, items + N, cmp);
+    int budget = M;
+    int count = 0;
+    for (int i = 0; i &lt; N; ++i) {
+        if (items[i].price &lt;= budget) {
+            budget -= items[i].price;
+            s[count++] = items[i].name;
+        }
+    }
+    sort(s, s + count);
+    for (int i = 0; i &lt; count; ++i) {
+        cout &lt;&lt; s[i] &lt;&lt; endl;
+    }
+    return 0;
+}</pre>
+    </div>
+    <div class="key-point">💡 多关键字排序要按优先级从高到低写 cmp 函数。注意题目要求 <strong>优先级数值越小越高</strong>，输出要按字典序排序。</div>
+    <div><span class="tag concept">多关键字排序</span><span class="tag concept">贪心算法</span><span class="tag concept">结构体</span></div>
+  </div>
+</div>
+
+<footer>
+  <p>CCF GESP 认证 C++ 四级 · 2025年12月 · 真题讲解</p>
+  <p style="margin-top:4px;">题目来源：CCF GESP 官方真题 · 解析仅供参考学习</p>
+</footer>
+
+</div>
+</body>
+</html>
